@@ -1,0 +1,17 @@
+.inputAndButtonBox {
+  outline: 1px solid darkblue;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  width: 42%;
+}
+
+.input {
+  width: 72%;
+  height: 60px;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  padding-left: 16px;
+  font-size: 18px;
+  border-radius: 20px;
+}
