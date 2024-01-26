@@ -4,7 +4,7 @@ import styles from "./string.module.css";
 import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
-import { reverseString } from "./utils";
+import { useReversedString } from "./utils";
 
 export const StringComponent: React.FC = () => {
 
@@ -35,20 +35,13 @@ export const StringComponent: React.FC = () => {
     event.preventDefault();
 
     setIsArrayReversed(!isArrayReversed);
-
-  
   }
 
-  const getArrayToRender = (inputValue: string, isArrayReversed: boolean) => {
-    if (isArrayReversed) {
-      const reversedArray = reverseString(inputValue);
-      return reversedArray;
-    } else {
-      return inputValue.split("");
-    }
-  }
+  const reversedArray = useReversedString(inputValue);
 
-  const arrayToRender = getArrayToRender(inputValue, isArrayReversed);
+
+
+  const arrayToRender = isArrayReversed ? reversedArray : inputValue.split("");
 
 
 
