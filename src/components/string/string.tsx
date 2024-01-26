@@ -8,19 +8,19 @@ import { reverseString } from "./utils";
 
 export const StringComponent: React.FC = () => {
 
-  // 1) РАЗОБРАТЬСЯ С ХУКОМ useForm и применить его?
-  // 2) ПЕРЕПИСАТЬ АЛГОРИТМ, ЧТОБЫ ОН ПРИНИМАЛ НА ВХОД МАССИВ, А НЕ СТРОКУ(!)
-  // + 3) СДЕЛАТЬ, ЧТОБЫ В МАССИВЕ МЭПИЛИСЬ values из инпута
-  // 4) ВНЕДРИТЬ В ВЕРСТКУ АЛГОРИТМ, ЧТОБЫ ОН ЗАРАБОТАЛ
-  // 5) ПРИДУМАТЬ, КАК ВНЕДРИТЬ АНИМАЦИЮ
+  // 1) Сделать, чтобы в массиве мэпились не values из инпута, а перевернутый массив
+  // из этих values
+
+  // 2) Применить для этого хук useForm?
+
+  // 3) Разобраться с анимацией
+
 
   const [inputValue, setInputValue] = useState("");
   //const [isLoader, setIsLoader] = useState(false);
-  //const arrayOfValues = Array.from( /* добавить сюда
-  // коллекцию всех значений в инпуте */ );
 
+   // Складываю в массив коллекцию всех values в инпуте
     const arrayOfValues = Array.from(inputValue.split(""));
-
     console.log(arrayOfValues);
 
 
@@ -33,20 +33,15 @@ export const StringComponent: React.FC = () => {
   const turnArrayAround = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    reverseString(arrayOfValues);
-
-
-
+    // Вызываю мой алгоритм с массивом, полученным из стейта
+    const reversedArray = reverseString(arrayOfValues);
     
+    // Здесь возникает проблема: массив в кружках отображается только тогда,
+    // когда меняется стейт (он же - values в инпутах). А так не должно быть.
+    setInputValue(reversedArray.join(""));
 
-    // Вызвать мой алгоритм с массивом arrayOfValues как параметр
-    
-  
-    setInputValue("");
+    return reversedArray;
   }
-
-
-
 
 
 
@@ -70,7 +65,7 @@ export const StringComponent: React.FC = () => {
           />
         </form>
         
-        {/* А здесь будут кружочки */}
+        {/* Кружочки со values инпута */}
         <ul className={styles.circlesBlock}>
                
           {arrayOfValues.map((element, index) => (
