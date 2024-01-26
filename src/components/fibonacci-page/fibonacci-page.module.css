@@ -26,7 +26,7 @@
 }
 
 .circlesBlock {
-  outline: 1px solid red;
+  width: 944px;
   height: 80px;
   margin-top: 0;
   margin-right: auto;
@@ -36,7 +36,9 @@
   display: flex;
   justify-content: center;
   gap: 16px;
+  row-gap: 70px;
   list-style: none;
+  flex-wrap: wrap;
 }
 
 .calculateButton {

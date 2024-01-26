@@ -8,24 +8,25 @@ import { reverseString } from "./utils";
 
 export const StringComponent: React.FC = () => {
 
-  // 1) Сделать, чтобы в массиве мэпились не values из инпута, а перевернутый массив
-  // из этих values
 
-  // 2) Применить для этого хук useForm?
+  // 1) Подаём на вход строку, на выходе получаем массив состояний, 
+  // где каждое состояние фиксирует шаг алгоритма.
+  // После этого в компоненте прогоняем полученный массив состояний 
+  // с неким интервалом и отрисовать каждое состояние. 
+  // Получаем визуализацию алгоритма, хотя сам алгоритм остаётся изолированным.
 
-  // 3) Разобраться с анимацией
+
 
 
   const [inputValue, setInputValue] = useState("");
+  const [isArrayReversed, setIsArrayReversed] = useState(false);
+
   //const [isLoader, setIsLoader] = useState(false);
 
-   // Складываю в массив коллекцию всех values в инпуте
-    const arrayOfValues = Array.from(inputValue.split(""));
-    console.log(arrayOfValues);
 
 
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Обработчик изменения поля ввода обновляет состояние
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   }
 
@@ -33,15 +34,21 @@ export const StringComponent: React.FC = () => {
   const turnArrayAround = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Вызываю мой алгоритм с массивом, полученным из стейта
-    const reversedArray = reverseString(arrayOfValues);
-    
-    // Здесь возникает проблема: массив в кружках отображается только тогда,
-    // когда меняется стейт (он же - values в инпутах). А так не должно быть.
-    setInputValue(reversedArray.join(""));
+    setIsArrayReversed(!isArrayReversed);
 
-    return reversedArray;
+  
   }
+
+  const getArrayToRender = (inputValue: string, isArrayReversed: boolean) => {
+    if (isArrayReversed) {
+      const reversedArray = reverseString(inputValue);
+      return reversedArray;
+    } else {
+      return inputValue.split("");
+    }
+  }
+
+  const arrayToRender = getArrayToRender(inputValue, isArrayReversed);
 
 
 
@@ -53,7 +60,7 @@ export const StringComponent: React.FC = () => {
                    type ="text" 
                    extraClass ={styles.input}
                    value={inputValue}
-                   onChange={onInputChange} 
+                   onChange={handleChange} 
             />
             <p className={styles.subscript}>
               Максимум — 11 символов
@@ -68,7 +75,7 @@ export const StringComponent: React.FC = () => {
         {/* Кружочки со values инпута */}
         <ul className={styles.circlesBlock}>
                
-          {arrayOfValues.map((element, index) => (
+          {arrayToRender.map((element, index) => (
             <li key={index} className={styles.circleElement}>
               <Circle
                 letter={element}

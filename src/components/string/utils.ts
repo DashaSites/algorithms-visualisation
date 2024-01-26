@@ -1,6 +1,6 @@
-// АЛГОРИМТ ПРИНИМАЕТ МАССИВ
+// АЛГОРИМТ ПРИНИМАЕТ СТРОКУ, А НЕ МАССИВ: ПЕРЕДЕЛАТЬ
 
-export const reverseString = (inputedValues: string[]): string[] => {
+export const reverseString = (inputedValues: string): string[] => {
 // завожу пустой массив, чтоб положить в него перевернутый аргумент
   
 const outputArray: string[] = [];
@@ -16,4 +16,4 @@ const outputArray: string[] = [];
 
 
 
-//console.log(reverseString(["d","a","s","h","a"]));
+

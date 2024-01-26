@@ -24,7 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "alg-1": "ts-node ./src/algorithms/string-alg.ts"
+    "alg-1": "ts-node ./src/algorithms/string-alg.ts",
+    "alg-2": "ts-node ./src/algorithms/fibonacci-alg.ts"
   },
   "eslintConfig": {
     "extends": [
