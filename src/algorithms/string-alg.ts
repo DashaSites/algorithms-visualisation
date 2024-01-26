@@ -1,23 +1,25 @@
-console.log("start")
+// console.log("start")
 
-const reverseString = (inputedString: string): string => {
-  // завожу массив, чтоб положить в него перевернутую строку, 
-  // тк тайпскрипт не позволяет изменять данные типа "строка"
-  const outputedStringInArray: string[] = [];
+// // ПЕРЕПИСАТЬ АЛГОРИТМ ТАК, ЧТОБЫ ОН ПРИНИМАЛ МАССИВ
 
-  for (let i = 0; i <= inputedString.length-1; i++) {
+// const reverseString = (inputedString: string): string => {
+//   // завожу массив, чтоб положить в него перевернутую строку, 
+//   // тк тайпскрипт не позволяет изменять данные типа "строка"
+//   const outputedStringInArray: string[] = [];
 
-    outputedStringInArray[inputedString.length - i - 1] = inputedString[i];
+//   for (let i = 0; i <= inputedString.length-1; i++) {
+
+//     outputedStringInArray[inputedString.length - i - 1] = inputedString[i];
   
-  } 
-// привожу итоговый массив к строке, тк моя функция должна возвращать строку
-return outputedStringInArray.join("");
-}
+//   } 
+// // привожу итоговый массив к строке, тк моя функция должна возвращать строку
+// return outputedStringInArray.join("");
+// }
 
-console.log(reverseString("1234567"))
+// console.log(reverseString("1234567"))
 
 
-console.log("finish")
+// console.log("finish")
 
 
 

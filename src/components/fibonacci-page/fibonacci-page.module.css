@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   margin-right: auto;
-  margin-bottom: 120px;
+  margin-bottom: 48px;
   margin-left: auto;
-  width: 522px;
+  width: 567px;
   height: 86px;
 }
 
@@ -39,11 +39,10 @@
   list-style: none;
 }
 
+.calculateButton {
+  width: 178px;
+}
+
 .input {
   color: #7A7A7A;
 }
-
-.circleElement {
-
-}
-
