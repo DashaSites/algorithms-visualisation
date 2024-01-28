@@ -32,7 +32,7 @@ const inputedArr = [1, 4, 6, 8, 7, 4, 4, 6, 7, 3, 4, 6, 7, 5, 4 ,3];
           <Input
             type="number"
             min={1} 
-            max={5} 
+            maxLength={11} 
             extraClass ={styles.input} 
           />
           <p className={styles.subscript}>

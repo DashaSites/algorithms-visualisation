@@ -1,5 +1,5 @@
 export enum ElementStates {
-  Default = "default",
-  Changing = "changing",
-  Modified = "modified",
+  Default = "default", // синий
+  Changing = "changing", // розовый
+  Modified = "modified", // зеленый
 }

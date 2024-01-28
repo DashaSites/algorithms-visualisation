@@ -28,7 +28,7 @@
 
 
 
-const reverseString = (inputedString: string): string => {
+export const reverseString = (inputedString: string): string => {
   // завожу массив, чтоб положить в него перевернутую строку, 
   // тк тайпскрипт не позволяет изменять данные типа "строка"
   const outputedStringInArray: string[] = [];
