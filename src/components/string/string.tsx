@@ -37,11 +37,11 @@ export const StringComponent: React.FC = () => {
     setIsLoader(true);
   }
 
-  // Массив, в котором лежит развернутая строка
+  // Массив, в котором лежит строка для рендера (простая или развернутая)
   const outputElementsToRender = useOutputElements(inputValue, isArrayReversed);
 
 
-  //const arrayToRender = isArrayReversed ? outputElementsToRender : inputValue.split("");
+  /////const arrayToRender = isArrayReversed ? outputElementsToRender : inputValue.split("");
 
 
   return (
