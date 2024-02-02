@@ -6,15 +6,14 @@ import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { useOutputElements } from "./utils";
 
-
-export const StringComponent: React.FC = () => {
-
   // 1) Подаём на вход строку, на выходе получаем массив состояний, 
   // где каждое состояние фиксирует шаг алгоритма.
   // После этого в компоненте прогоняем полученный массив состояний 
   // с неким интервалом и отрисовать каждое состояние. 
   // Получаем визуализацию алгоритма, хотя сам алгоритм остаётся изолированным.
 
+
+export const StringComponent: React.FC = () => {
 
   const [inputValue, setInputValue] = useState("");
   const [isArrayReversed, setIsArrayReversed] = useState(false);
@@ -34,14 +33,11 @@ export const StringComponent: React.FC = () => {
   const invertArray = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsArrayReversed(!isArrayReversed);
-    setIsLoader(true);
   }
 
-  // Массив, в котором лежит строка для рендера (простая или развернутая)
+  // Массив, в котором лежит строка для рендера (введенная в инпут или развернутая)
   const outputElementsToRender = useOutputElements(inputValue, isArrayReversed);
-
-
-  /////const arrayToRender = isArrayReversed ? outputElementsToRender : inputValue.split("");
+  console.log('outputElementsToRender', JSON.stringify(outputElementsToRender))
 
 
   return (
@@ -69,9 +65,10 @@ export const StringComponent: React.FC = () => {
         
         {/* Кружочки с values инпута */}
         <ul className={styles.circlesBlock}>
+          {JSON.stringify(outputElementsToRender)}
                
           {outputElementsToRender.map((element, index) => (
-            <li key={index} className={styles.circleElement}>
+            <li key={index + element.symbol + element.state} className={styles.circleElement}>
               <Circle
                 letter={element.symbol}
                 state={element.state}
