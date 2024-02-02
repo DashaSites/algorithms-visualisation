@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { ElementStates } from "../../types/element-states";
 
 ///// УНИВЕРСАЛЬНЫЕ (М.Б. В БУДУЩЕМ) ФУНКЦИИ:
@@ -34,12 +34,16 @@ const getOutputElementsInitialState = (
 
 // ЭТА ФУНКЦИЯ НЕ РАБОТАЕТ
 // Меняю местами левый и правый индексы элементов массива, меняю цвета кружочков
-const swap = (array: OutputElement[], leftIndex: number, rightIndex: number): void => {
+const swap = (
+  array: OutputElement[],
+  leftIndex: number,
+  rightIndex: number
+): void => {
   const temp = array[leftIndex];
   array[leftIndex] = array[rightIndex];
   array[rightIndex] = temp;
 
-  array[leftIndex].state = ElementStates.Modified; 
+  array[leftIndex].state = ElementStates.Modified;
   array[rightIndex].state = ElementStates.Modified;
 
   const nextLeftIndex = leftIndex + 1;
@@ -47,6 +51,10 @@ const swap = (array: OutputElement[], leftIndex: number, rightIndex: number): vo
 
   // !!! А ТУТ НАДО НАПИСАТЬ, ЧТО БУДЕТ С ЭЛЕМЕНТАМИ
   // ПОД ЭТИМИ ИНДЕКСАМИ nextLeftIndex И nextRightIndex!!!
+
+  if (nextLeftIndex > nextRightIndex) {
+    return;
+  }
 
   array[nextLeftIndex].state = ElementStates.Changing;
   array[nextRightIndex].state = ElementStates.Changing;
@@ -62,25 +70,29 @@ export type OutputElement = {
 // Хук, который получает строку и возвращает массив объектов,
 // в которых 1) строка развернута и
 // 2) каждой букве соответствует определенное состояние
-export const useOutputElements = (inputedValues: string, isArrayReversed: boolean): OutputElement[] => {
+export const useOutputElements = (
+  inputedValues: string,
+  isArrayReversed: boolean
+): OutputElement[] => {
   // завожу пустой массив объектов, чтоб положить в него (перевернутую или нет) строку
   const [outputElements, setOutputElements] = useState<OutputElement[]>([]);
-
-  const currentOutputElementsRef = useRef<OutputElement[]>([])
 
   const reverseString = async () => {
     const isArrayReversedBeforeClick = !isArrayReversed;
 
     // Если строка в инпуте уже была перевернута, то перевернуть ее в кружках тоже.
     // А если нет, то в кружки тоже вставить ее в изначальном виде
-    console.log('isArrayReversedBeforeClick', isArrayReversedBeforeClick)
-    console.log('inputedValues', JSON.stringify(inputedValues))
+    console.log("isArrayReversedBeforeClick", isArrayReversedBeforeClick);
+    console.log("inputedValues", JSON.stringify(inputedValues));
 
     const arrayOfStraightOrReversedInputs = isArrayReversedBeforeClick
       ? inputedValues.split("").reverse()
       : inputedValues.split("");
-      
-    console.log('arrayOfStraightOrReversedInputs', JSON.stringify(arrayOfStraightOrReversedInputs))
+
+    console.log(
+      "arrayOfStraightOrReversedInputs",
+      JSON.stringify(arrayOfStraightOrReversedInputs)
+    );
 
     // Определяем initialState (порядок букв и цвета кружков) на момент
     // первой загрузки кружков
@@ -89,40 +101,38 @@ export const useOutputElements = (inputedValues: string, isArrayReversed: boolea
 
     // сохраняю в стейт первоначальное состояние (буквы и цвета) кружков, когда они появляются
     setOutputElements(outputElementsInitialState);
-    currentOutputElementsRef.current = outputElementsInitialState;
 
     console.log("Initial State: ", JSON.stringify(outputElementsInitialState));
-
-    const middleIndex = Math.floor(
-      currentOutputElementsRef.current.length / 2 - 1
-    );
-
-    for (let leftElementIndex = 0; leftElementIndex <= middleIndex; leftElementIndex++) {
-      await delay(1000);
-  
-      let rightElementIndex =
-        arrayOfStraightOrReversedInputs.length - 1 - leftElementIndex;
-
-      // Когда выполнится промис с задержкой, в функции swap произойдет следующее:
-
-      swap(currentOutputElementsRef.current, leftElementIndex, rightElementIndex);
-      console.log(leftElementIndex, JSON.stringify(currentOutputElementsRef.current));
-      setOutputElements(currentOutputElementsRef.current);
-
-      // - А ДАЛЬШЕ МНЕ НУЖНО ОБНОВИТЬ СТЕЙТ (МАССИВ ОБЪЕКТОВ OutputElement[])
-      // - ТО ЕСТЬ ВЫЗВАТЬ ФУНКЦИЮ setOutputElements(?что будет аргументом?);
-      // - СДЕЛАТЬ ЭТО ПО АНАЛОГИИ СО СТРОКАМИ 78 и 82
-
-
-      //setOutputElements(???);
-    }
   };
 
   useEffect(() => {
     reverseString();
   }, [isArrayReversed]);
 
-console.log('finalOutputElements', JSON.stringify(outputElements)) // здесь все ок
+  useEffect(() => {
+    const paintCircles = async () => {
+      await delay(1000);
+
+      console.log("paintCircles", new Date().toISOString());
+
+      const leftPinkIndex = outputElements.findIndex((elem) => {
+        return elem.state === ElementStates.Changing;
+      });
+
+      if (leftPinkIndex === -1) {
+        return;
+      }
+
+      const rightPinkIndex = outputElements.length - 1 - leftPinkIndex;
+      swap(outputElements, leftPinkIndex, rightPinkIndex);
+
+      setOutputElements([...outputElements]);
+      console.log("paintCirclesoutPutElements");
+    };
+
+    paintCircles();
+  }, [outputElements]);
+
 
   return outputElements;
 };

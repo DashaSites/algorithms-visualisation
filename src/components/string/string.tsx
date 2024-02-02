@@ -37,7 +37,7 @@ export const StringComponent: React.FC = () => {
 
   // Массив, в котором лежит строка для рендера (введенная в инпут или развернутая)
   const outputElementsToRender = useOutputElements(inputValue, isArrayReversed);
-  console.log('outputElementsToRender', JSON.stringify(outputElementsToRender))
+
 
 
   return (
@@ -64,9 +64,7 @@ export const StringComponent: React.FC = () => {
         </form>
         
         {/* Кружочки с values инпута */}
-        <ul className={styles.circlesBlock}>
-          {JSON.stringify(outputElementsToRender)}
-               
+        <ul className={styles.circlesBlock}>               
           {outputElementsToRender.map((element, index) => (
             <li key={index + element.symbol + element.state} className={styles.circleElement}>
               <Circle
