@@ -32,13 +32,9 @@ const getOutputElementsInitialState = (
   }
 };
 
-// ЭТА ФУНКЦИЯ НЕ РАБОТАЕТ
+
 // Меняю местами левый и правый индексы элементов массива, меняю цвета кружочков
-const swap = (
-  array: OutputElement[],
-  leftIndex: number,
-  rightIndex: number
-): void => {
+const swap = (array: OutputElement[], leftIndex: number, rightIndex: number): void => {
   const temp = array[leftIndex];
   array[leftIndex] = array[rightIndex];
   array[rightIndex] = temp;
@@ -49,9 +45,7 @@ const swap = (
   const nextLeftIndex = leftIndex + 1;
   const nextRightIndex = rightIndex - 1;
 
-  // !!! А ТУТ НАДО НАПИСАТЬ, ЧТО БУДЕТ С ЭЛЕМЕНТАМИ
-  // ПОД ЭТИМИ ИНДЕКСАМИ nextLeftIndex И nextRightIndex!!!
-
+  // условие, чтобы перекрашивание в розовый не продолжилось и после того, как мы пересечем середину массива
   if (nextLeftIndex > nextRightIndex) {
     return;
   }
@@ -70,29 +64,21 @@ export type OutputElement = {
 // Хук, который получает строку и возвращает массив объектов,
 // в которых 1) строка развернута и
 // 2) каждой букве соответствует определенное состояние
-export const useOutputElements = (
-  inputedValues: string,
-  isArrayReversed: boolean
-): OutputElement[] => {
+export const useOutputElements = (inputedValues: string, isArrayReversed: boolean): OutputElement[] => {
   // завожу пустой массив объектов, чтоб положить в него (перевернутую или нет) строку
   const [outputElements, setOutputElements] = useState<OutputElement[]>([]);
 
-  const reverseString = async () => {
+  const reverseString = () => {
     const isArrayReversedBeforeClick = !isArrayReversed;
 
-    // Если строка в инпуте уже была перевернута, то перевернуть ее в кружках тоже.
-    // А если нет, то в кружки тоже вставить ее в изначальном виде
-    console.log("isArrayReversedBeforeClick", isArrayReversedBeforeClick);
-    console.log("inputedValues", JSON.stringify(inputedValues));
-
+    // Если строка в инпуте уже была перевернута до клика по кнопке "развернуть", 
+    // то и в кружках она тоже сразу появится перевернутой.
+    // А если она не была перевернута в инпуте до клика, 
+    // то в кружках она сначала будет рендериться в прямом порядке
     const arrayOfStraightOrReversedInputs = isArrayReversedBeforeClick
       ? inputedValues.split("").reverse()
       : inputedValues.split("");
 
-    console.log(
-      "arrayOfStraightOrReversedInputs",
-      JSON.stringify(arrayOfStraightOrReversedInputs)
-    );
 
     // Определяем initialState (порядок букв и цвета кружков) на момент
     // первой загрузки кружков
@@ -101,36 +87,40 @@ export const useOutputElements = (
 
     // сохраняю в стейт первоначальное состояние (буквы и цвета) кружков, когда они появляются
     setOutputElements(outputElementsInitialState);
-
-    console.log("Initial State: ", JSON.stringify(outputElementsInitialState));
   };
+
+
 
   useEffect(() => {
     reverseString();
   }, [isArrayReversed]);
 
+
   useEffect(() => {
+
     const paintCircles = async () => {
+      
+      // делаем паузу в секунду
       await delay(1000);
-
-      console.log("paintCircles", new Date().toISOString());
-
+      // находим индекс левого розового элемента 
       const leftPinkIndex = outputElements.findIndex((elem) => {
         return elem.state === ElementStates.Changing;
       });
-
+      // а если такого элемента в массиве нет, то выходим из функции
       if (leftPinkIndex === -1) {
         return;
       }
-
+      // находим индекс правого розового элемента (он симметричен левому)
       const rightPinkIndex = outputElements.length - 1 - leftPinkIndex;
-      swap(outputElements, leftPinkIndex, rightPinkIndex);
 
+      swap(outputElements, leftPinkIndex, rightPinkIndex);
+      
+      // кладу в стейт новый массив, внутрь которого копирую прежний, видоизмененный через swap
       setOutputElements([...outputElements]);
-      console.log("paintCirclesoutPutElements");
     };
 
     paintCircles();
+
   }, [outputElements]);
 
 
@@ -141,3 +131,15 @@ export const useOutputElements = (
 export const delay = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
+
+
+
+///// С БОЛЬШИМ ТРУДОМ ИСПРАВЛЕННЫЕ ОШИБКИ, ИЗ КОТОРЫХ Я СДЕЛАЛА ВАЖНЫЕ ВЫВОДЫ:
+// 1) Стейт (здесь - outputElements) изменяется только через сеттер (setOutputElements)
+
+// 2) В рамках одной функции лучше не вызывать сеттер больше одного раза (он срабатывает по сути асинхронно,
+// то есть его вызов становится в очередь колбэков и ждет там завершения текущей функции, 
+// и только потом попасть в колстэк и исполниться. 
+
+// 3) Когда я возвращаю обновленный стейт в через сеттер, то если этот стейт - массив или объект, 
+// то важно помещать его в скобки ([] или {}) и использовать спред-оператор - как в редьюсере!
