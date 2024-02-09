@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ElementStates } from "../../types/element-states";
+import { delay } from "../../universal-functions/delay";
 
 ///// УНИВЕРСАЛЬНЫЕ (М.Б. В БУДУЩЕМ) ФУНКЦИИ:
 
@@ -127,11 +128,6 @@ export const useOutputElements = (inputedValues: string, isArrayReversed: boolea
   return outputElements;
 };
 
-// Эта функция-промис может позже использоваться и для других алгоритмов
-export const delay = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
 
 
 ///// С БОЛЬШИМ ТРУДОМ ИСПРАВЛЕННЫЕ ОШИБКИ, ИЗ КОТОРЫХ Я СДЕЛАЛА ВАЖНЫЕ ВЫВОДЫ:
@@ -140,6 +136,5 @@ export const delay = (ms: number) => {
 // 2) В рамках одной функции лучше не вызывать сеттер больше одного раза (он срабатывает по сути асинхронно,
 // то есть его вызов становится в очередь колбэков и ждет там завершения текущей функции, 
 // и только потом попасть в колстэк и исполниться. 
-
 // 3) Когда я возвращаю обновленный стейт в через сеттер, то если этот стейт - массив или объект, 
 // то важно помещать его в скобки ([] или {}) и использовать спред-оператор - как в редьюсере!
