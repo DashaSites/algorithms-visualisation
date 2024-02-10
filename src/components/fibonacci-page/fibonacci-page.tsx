@@ -56,16 +56,15 @@ const renderArrayWithDelay = async () => {
   
   // создаю пустой массив, куда постепенно, с промежутком в 500 мс,
   // буду складывать элементы последовательности Ф., отображая их в кружках
-  let arrayToStoreValuesRenderingWithDelay = [];
+  const arrayToStoreValuesRenderingWithDelay = [];
 
   // цикл, чтобы пройтись по всей последовательности и задать промежуток
   for (let i = 0; i < outputArrayWithFibonacciSequence.length; i++) {
 
-      
     // перед каждым шагом цикла делаю паузу в полсекунды
     await delay(500);
     
-    // кладу в массив для отображения очередной элемент массива
+    // кладу в новый специальный массив очередной элемент массива из алгоритма
     arrayToStoreValuesRenderingWithDelay.push(outputArrayWithFibonacciSequence[i]);
     console.log(arrayToStoreValuesRenderingWithDelay);
 
@@ -74,12 +73,9 @@ const renderArrayWithDelay = async () => {
   }
 
   // итоговое действие - сохраняю в стейт новый массив, 
-  // внутрь которого копирую прежний, к которому добавился новый кружок с числом
+  // внутри которого разворачиваю массив для рендера, полученный через цикл
   setArrayToRender([...arrayToStoreValuesRenderingWithDelay]);
   setIsLoader(false);
-
-  
-
 }
 
 
@@ -90,7 +86,6 @@ const renderArrayWithDelay = async () => {
           <Input
             extraClass ={styles.input}
             type="number"
-            max="0"
             value={inputValue}
             onChange={handleChange} 
           />
@@ -107,8 +102,6 @@ const renderArrayWithDelay = async () => {
           onClick={renderArrayWithDelay} 
         />
       </form>
-      
-      {/* А здесь будут кружочки */}
       <ul className={styles.circlesBlock}>
         {arrayToRender.map((elem, index) => (
            <li key={index} className={styles.circleElement}>
@@ -118,10 +111,7 @@ const renderArrayWithDelay = async () => {
            />
          </li>
         ))}
-
-
       </ul>
-     
     </SolutionLayout>
   );
 };

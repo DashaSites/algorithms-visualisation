@@ -1,0 +1,48 @@
+.controlComponentsBlock {
+  display: flex;
+  /* justify-content: space-between; */
+  margin-right: auto;
+  margin-bottom: 48px;
+  margin-left: auto;
+  width: 980px;
+  height: 60px;
+}
+
+.radioButtons {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin-right: 52px;
+}
+
+.sortingButtons {
+  display: flex;
+  gap: 12px;
+  margin-right: 80px;
+}
+
+.ascendingButton {
+  width: 208px;
+}
+
+.descendingButton {
+  width: 208px;
+}
+
+.renderNewArrayButton {
+  width: 205px;
+}
+
+.columnsBlock {
+  max-width: 1012px;
+  margin-top: 0;
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 10px;
+  list-style: none;
+}
