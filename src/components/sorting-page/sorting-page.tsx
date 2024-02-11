@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./sorting-page.module.css";
 import { Button } from "../ui/button/button";
@@ -11,6 +11,12 @@ import { Direction } from "../../types/direction";
 
 
 export const SortingPage: React.FC = () => {
+
+  const [arrayToRender, setArrayToRender] = useState<number[]>([]);
+
+  // useEffect(() => {
+  //   generateRandomArray();
+  // }, [arrayToRender]);
 
   // Запустить useEffect:
   // при открытии страницы или при нажатии кнопки «Новый массив» генерируется 
@@ -28,9 +34,16 @@ export const SortingPage: React.FC = () => {
    while (randomArray.length < arrayLength) {
     randomArray.push(Math.round(Math.random() * 100));
    }
-   console.log(randomArray)
+   console.log(`Random array just generated: ${randomArray}`)
    return randomArray;
   }
+
+  const generatedArray = generateRandomArray();
+
+  const changeRenderedArray = () => {
+    setArrayToRender(generatedArray);
+  }
+
 
 
   const sortInAscendingOrder = () => {
@@ -66,7 +79,6 @@ const testArray: number[] = [2, 34, 17, 100, 50, 2, 34, 17, 100, 50, 2, 34, 17, 
           />
         </div>
         <div className={styles.sortingButtons}>
-        
         <Button 
           text="По возрастанию" 
           type="submit" 
@@ -74,7 +86,6 @@ const testArray: number[] = [2, 34, 17, 100, 50, 2, 34, 17, 100, 50, 2, 34, 17, 
           onClick={sortInAscendingOrder}
           sorting={Direction.Ascending}
         />
-
         <Button 
           text="По убыванию" 
           type="submit" 
@@ -82,15 +93,14 @@ const testArray: number[] = [2, 34, 17, 100, 50, 2, 34, 17, 100, 50, 2, 34, 17, 
           onClick={sortInDescendingOrder}
           sorting={Direction.Descending} 
         />
-        </div>
-        
+        </div> 
         <Button 
           text="Новый массив" 
           type="button" 
           extraClass={styles.renderNewArrayButton}
-          onClick={generateRandomArray}
+          onClick={changeRenderedArray}
+          
         />
-
       </form>
       
       <ul className={styles.columnsBlock}>
