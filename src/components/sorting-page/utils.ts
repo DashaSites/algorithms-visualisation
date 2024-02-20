@@ -1,4 +1,4 @@
-// +++ Общая функция для перестановки
+// + Общая функция swap
 const swap = (arr: number[], firstIndex: number, secondIndex: number): void => {
   const temp = arr[firstIndex];
   arr[firstIndex] = arr[secondIndex];
@@ -6,8 +6,7 @@ const swap = (arr: number[], firstIndex: number, secondIndex: number): void => {
 };
 
 
-
-// +++ Сортировка выбором по возрастанию
+// + Сортировка выбором по возрастанию
 export const sortSelectionAscending = (arr: number[]) => {
   const { length } = arr;
   for (let i = 0; i < length - 1; i++) {
@@ -24,8 +23,7 @@ export const sortSelectionAscending = (arr: number[]) => {
 };
 
 
-
-// +++ Сортировка выбором по убыванию
+// + Сортировка выбором по убыванию
 export const sortSelectionDescending = (arr: number[]) => {
   const { length } = arr;
   for (let i = 0; i < length - 1; i++) {
@@ -42,8 +40,7 @@ export const sortSelectionDescending = (arr: number[]) => {
 };
 
 
-
-// +++ Сортировка пузырьком по возрастанию
+// + Сортировка пузырьком по возрастанию
 export const sortBubbleAscending = (array: number[]) => {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length; j++) {
@@ -59,8 +56,7 @@ export const sortBubbleAscending = (array: number[]) => {
 }
 
 
-
-// +++ Сортировка пузырьком по убыванию
+// + Сортировка пузырьком по убыванию
 export const sortBubbleDescending = (array: number[]) => {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length; j++) {
