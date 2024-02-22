@@ -6,8 +6,11 @@ import { Column } from "../ui/column/column";
 import { RadioInput } from "../ui/radio-input/radio-input";
 import { ElementStates } from "../../types/element-states";
 import { Direction } from "../../types/direction";
-import { sortBubbleAscending, sortBubbleDescending, sortSelectionAscending, sortSelectionDescending } from "./utils";
-
+import { sortBubbleAscending, 
+  sortBubbleDescending, 
+  sortSelectionAscending, 
+  sortSelectionDescending } from "./utils";
+import { delay } from "../../universal-functions/delay";
 
 // СДЕЛАТЬ:
 
@@ -22,17 +25,33 @@ import { sortBubbleAscending, sortBubbleDescending, sortSelectionAscending, sort
 // + 4.1) ВЫБОР АЛГОРИТМА, 
 // + 4.2) ВЫБОР НАПРАВЛЕНИЯ (ВОЗРАСТАНИЕ/УБЫВАНИЕ)
 
-// 5) АНИМАЦИЯ!
+// 5) АНИМАЦИЯ:
+// + 5.1) СДЕЛАТЬ ИЗНАЧАЛЬНЫЙ МАССИВ - МАССИВОМ ОБЪЕКТОВ, У КОТОРОГО ЕСТЬ ПОЛЯ VALUE И STATE,
+// И ЗАДАТЬ СВОЙСТВУ STATE ИЗНАЧАЛЬНЫЙ state: ElementStates.Default
+
+
+// 5.2) В utils.ts ПЕРЕПИСАТЬ ВСЕ 4 АЛГОРИТМА, 
+// 5.2.1) ВСЕ-ТАКИ ВСТАВИВ В КАЖДЫЙ ИЗ НИХ ЛОГИКУ ИЗ SWAP
+// 5.2.2) И СДЕЛАВ ИХ АСИНХРОННЫМИ ФУНКЦИЯМИ С ПЕРЕЗАПИСЫВАНИЕМ СТЕЙТОВ (ElementStates) ПО УСЛОВИЯМ
 
 
 
 type Algorithm = "Выбор" | "Пузырек"; 
 
-export const SortingPage: React.FC = () => {
 
-  const [arrayToRender, setArrayToRender] = useState<number[]>([]);
+type ArrayElement = {
+  value: number;
+  state: ElementStates;
+};
+
+export const SortingPage: React.FC = () => {
+                                    // заменить тип number[] на <ArrayElement[]>
+  const [arrayToRender, setArrayToRender] = useState<ArrayElement[]>([]);
 
   const [algorithmChecked, setAlgorithmChecked] = useState<Algorithm>("Выбор");
+
+  const [isLoader, setIsLoader] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
 
 
@@ -43,14 +62,14 @@ export const SortingPage: React.FC = () => {
 
 
   // Геренатор массива случайных чисел
-  // Эта функция должна быть вызвана при открытии страницы и при клике на "Новый массив":
   const generateRandomArray = () => {
    // определяю длину массива случайных чисел (от 3 до 17)
    const arrayLength = Math.round((Math.random() * 14) + 3)
 
    const randomArray: number[] = [];
   
-  // пока длина моего массива меньше числа arrayLength, пушу туда случайные числа от 0 до 100
+  // пока длина моего массива меньше числа arrayLength, 
+  // пушу в него случайные числа от 0 до 100
    while (randomArray.length < arrayLength) {
     randomArray.push(Math.round(Math.random() * 100));
    }
@@ -61,44 +80,56 @@ export const SortingPage: React.FC = () => {
 
 
 
-  // Записываю сгенерированный массив в стейт
+  // Превращаю сгенерированный массив в массив объектов и записываю его в стейт
+  // const renderGeneratedArray = () => {
+  //   setArrayToRender([]);
+  //   const generatedArray = generateRandomArray();
+
+  //   setArrayToRender([...generatedArray]);
+  // }
+
   const renderGeneratedArray = () => {
     setArrayToRender([]);
     const generatedArray = generateRandomArray();
-    setArrayToRender([...generatedArray]);
-  }
+
+    const arrayToRenderInitialState = generatedArray.map((arrayElement) => ({
+      value: arrayElement,
+      state: ElementStates.Default
+    }))
+    setArrayToRender([...arrayToRenderInitialState]);
+  };
 
 
 
 
-  // Запускаю сортировку по возрастанию в зависимости от выбранного метода: 
-  // выбором или пузырьком
+  // Запускаю сортировку по возрастанию (выбором либо пузырьком)
   const sortArrayInAscendingOrder = () => {
   
     if (algorithmChecked === "Выбор") {
+      setIsLoader(true)
       // сортирую выбором по возрастанию
       const arraySortedSelectionAscending = sortSelectionAscending(arrayToRender);
-      console.log(arraySortedSelectionAscending); // УРРРААА
-      // записываю результат в стейт
+      console.log(arraySortedSelectionAscending);
+      // помещаю отсортированный массив в стейт
       setArrayToRender([...arraySortedSelectionAscending]);
-
     } else if (algorithmChecked === "Пузырек") {
+      setIsLoader(true)
       // сортирую пузырьком по возрастанию
       const arraySortedBubbleAscending = sortBubbleAscending(arrayToRender);
       console.log(arraySortedBubbleAscending); 
-      // записываю результат в стейт
       setArrayToRender([...arraySortedBubbleAscending]);
     }
+
   }
 
 
-  // Запускаю сортировку по убыванию в зависимости от выбранного метода: 
-  // выбором или пузырьком
+  // Запускаю сортировку по убыванию (выбором либо пузырьком)
   const sortArrayInDescendingOrder = () => {
+
     if (algorithmChecked === "Выбор") {
       // сортирую выбором по убыванию
       const arraySortedSelectionDescending = sortSelectionDescending(arrayToRender);
-      console.log(arraySortedSelectionDescending); // УРРРААА
+      console.log(arraySortedSelectionDescending);
       // записываю результат в стейт
       setArrayToRender([...arraySortedSelectionDescending]);
     } else if (algorithmChecked === "Пузырек") {
@@ -108,12 +139,10 @@ export const SortingPage: React.FC = () => {
       // записываю результат в стейт
       setArrayToRender([...arraySortedBubbleDescending]);
     }
+
   }
 
-
-
-
-const testArray: number[] = [2, 34, 17, 100, 50, 2, 34, 17, 100, 50, 2, 34, 17, 100, 50, 45, 77];
+// НАПИСАТЬ ФУНКЦИЮ, ОПРЕДЕЛЯЮЩУЮ, НА КАКОЙ ИМЕННО КНОПКЕ В ДАННЫЙ МОМЕНТ АКТИВЕН ЛОУДЕР.
 
 
   return (
@@ -144,13 +173,17 @@ const testArray: number[] = [2, 34, 17, 100, 50, 2, 34, 17, 100, 50, 2, 34, 17, 
           extraClass={styles.ascendingButton} 
           onClick={sortArrayInAscendingOrder}
           sorting={Direction.Ascending}
+          isLoader={isLoader} // вызвать здесь функцию, которая определит, какой именно лоудер активен
+          // disabled={} пока хз как определить
         />
         <Button 
           text="По убыванию" 
           type="button" 
           extraClass={styles.descendingButton}
           onClick={sortArrayInDescendingOrder}
-          sorting={Direction.Descending} 
+          sorting={Direction.Descending}
+          isLoader={isLoader} // вызвать здесь функцию, которая определит, какой именно лоудер активен
+          // disabled={} пока хз как определить 
         />
         </div> 
         <Button 
@@ -162,10 +195,11 @@ const testArray: number[] = [2, 34, 17, 100, 50, 2, 34, 17, 100, 50, 2, 34, 17, 
       </form>
       
       <ul className={styles.columnsBlock}>
-        {arrayToRender.map((elem, index) => (
+        {arrayToRender.map((element, index) => (
            <li key={index} className={styles.columnElement}>
             <Column
-              index={elem}
+              index={element.value}
+              state={element.state}
             />
          </li>
         ))}
