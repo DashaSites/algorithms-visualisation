@@ -18,34 +18,39 @@ const swap = (arr: ArrayElement[], firstIndex: number, secondIndex: number): voi
 
 // + Сортировка выбором по возрастанию
 export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
-  console.log(`array in algorithm-0: ${arr}`)
   const { length } = arr;
   
-  for (let i = 0; i < length - 1; i++) {
-    let minInd = i;
+  for (let leftIndex = 0; leftIndex <= length - 1; leftIndex++) {
+    let minInd = leftIndex;
     arr[minInd].state = ElementStates.Changing;
-    await delay(1000)
     setArr([...arr]);
+    await delay(1000)
     
-    for (let j = i + 1; j < length; j++) {
-      arr[j].state = ElementStates.Changing;
-     
+    for (let rightIndex = leftIndex + 1; rightIndex < length; rightIndex++) {
+      arr[rightIndex].state = ElementStates.Changing;
+      if (rightIndex > leftIndex + 1) {
+        arr[rightIndex-1].state = ElementStates.Default;
+      }
       setArr([...arr]);
-      if (arr[j] < arr[minInd]) {
-        minInd = j;
+      await delay(1000)
+
+      if (arr[rightIndex].value < arr[minInd].value) {
+        minInd = rightIndex;
+        console.log("newMinInd", minInd)
       }
     }
-    //const temp = arr[i];
-    //arr[i] = arr[minInd];
-    //arr[minInd] = temp;
+    console.log("array before swap", arr)
 
-    swap(arr, i, minInd);
+    swap(arr, leftIndex, minInd);
+    console.log("array after swap", arr)
     arr[minInd].state = ElementStates.Default;
-    arr[i].state = ElementStates.Modified;
-    await delay(1000)
+    arr[arr.length-1].state = ElementStates.Default;
+    arr[leftIndex].state = ElementStates.Modified;
     setArr([...arr]);
-    
+  
+    await delay(1000)
   }
+
 console.log(`отсортированный выбором по возрастанию: ${arr}`);
   setArr([...arr]);
   return arr;

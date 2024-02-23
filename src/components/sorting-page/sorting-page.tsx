@@ -71,8 +71,6 @@ export const SortingPage: React.FC = () => {
    while (randomArray.length < arrayLength) {
     randomArray.push(Math.round(Math.random() * 100));
    }
-
-   console.log(`Random array just generated: ${randomArray}`)
    return randomArray;
   }
 
@@ -86,25 +84,21 @@ export const SortingPage: React.FC = () => {
   //   setArrayToRender([...generatedArray]);
   // }
 
-  const renderGeneratedArray = () => {
+  const renderGeneratedArray = async () => {
     setArrayToRender([]);
     const generatedArray = generateRandomArray();
-    
-    // ЗДЕСЬ ЧТО-ТО ПОШЛО НЕ ТАК!
     const arrayToRenderInitialState = generatedArray.map((arrayElement) => ({
       value: arrayElement,
       state: ElementStates.Default
     })) as ArrayElement[];
-    console.log(arrayToRenderInitialState) // ЗДЕСЬ МАССИВ ОБЪЕКТОВ
+    console.log(arrayToRenderInitialState)
     setArrayToRender([...arrayToRenderInitialState]);
-    console.log(arrayToRender); // А ЗДЕСЬ ПУСТОЙ МАССИВ!
+    await delay(1000)
   };
 
 
-
-
   // Запускаю сортировку по возрастанию (выбором либо пузырьком)
-  const sortArrayInAscendingOrder = () => {
+  const sortArrayInAscendingOrder = async () => {
   
     if (algorithmChecked === "Выбор") {
       setIsLoader(true);
@@ -112,7 +106,7 @@ export const SortingPage: React.FC = () => {
       
      
       // сортирую выбором по возрастанию
-      const arraySortedSelectionAscending = sortSelectionAscending(arrayToRender, setArrayToRender);
+      const arraySortedSelectionAscending = await sortSelectionAscending(arrayToRender, setArrayToRender);
       console.log(arraySortedSelectionAscending);
       // помещаю отсортированный массив в стейт
       setArrayToRender([...arraySortedSelectionAscending]);
