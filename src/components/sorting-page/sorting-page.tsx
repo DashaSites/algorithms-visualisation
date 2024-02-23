@@ -7,7 +7,7 @@ import { RadioInput } from "../ui/radio-input/radio-input";
 import { ElementStates } from "../../types/element-states";
 import { Direction } from "../../types/direction";
 import { sortBubbleAscending, 
-  sortBubbleDescending, 
+  sortBubbleDescending,
   sortSelectionAscending, 
   sortSelectionDescending } from "./utils";
 import { delay } from "../../universal-functions/delay";
@@ -15,24 +15,23 @@ import { delay } from "../../universal-functions/delay";
 // СДЕЛАТЬ:
 
 // + 1) ПРИ ОТКРЫТИИ СТРАНИЦЫ ГЕНЕРИРОВАТЬ СЛУЧАЙНЫЙ МАССИВ
-
 // + 2) ЭТОТ МАССИВ ДОЛЖЕН СОХРАНИТЬСЯ В СТЕЙТ, И ПОСРЕДСТВОМ ЭТОГО ОТРЕНДЕРИТЬСЯ
-
 // + 3) ПРИ КЛИКЕ НА КНОПКУ "НОВЫЙ МАССИВ" ГЕНЕРИРУЕТСЯ И РЕНДЕРИТСЯ НОВЫЙ 
 // СЛУЧАЙНЫЙ МАССИВ.
-
 // + 4) СОРТИРОВКА: 
 // + 4.1) ВЫБОР АЛГОРИТМА, 
 // + 4.2) ВЫБОР НАПРАВЛЕНИЯ (ВОЗРАСТАНИЕ/УБЫВАНИЕ)
 
 // 5) АНИМАЦИЯ:
 // + 5.1) СДЕЛАТЬ ИЗНАЧАЛЬНЫЙ МАССИВ - МАССИВОМ ОБЪЕКТОВ, У КОТОРОГО ЕСТЬ ПОЛЯ VALUE И STATE,
-// И ЗАДАТЬ СВОЙСТВУ STATE ИЗНАЧАЛЬНЫЙ state: ElementStates.Default
+// И ЗАДАТЬ ИЗНАЧАЛЬНЫЙ state: ElementStates.Default
 
 
-// 5.2) В utils.ts ПЕРЕПИСАТЬ ВСЕ 4 АЛГОРИТМА, 
-// 5.2.1) ВСЕ-ТАКИ ВСТАВИВ В КАЖДЫЙ ИЗ НИХ ЛОГИКУ ИЗ SWAP
-// 5.2.2) И СДЕЛАВ ИХ АСИНХРОННЫМИ ФУНКЦИЯМИ С ПЕРЕЗАПИСЫВАНИЕМ СТЕЙТОВ (ElementStates) ПО УСЛОВИЯМ
+// 5) В utils.ts ПЕРЕПИСАТЬ 4 АЛГОРИТМА, 
+// СДЕЛАВ ИХ АСИНХРОННЫМИ? ФУНКЦИЯМИ С ПЕРЕЗАПИСЫВАНИЕМ ElementStates
+
+// 6) + НАСТРОИТЬ ЛОУДЕР
+// 7) + НАСТРОИТЬ disabled КНОПОК
 
 
 
@@ -41,21 +40,20 @@ type Algorithm = "Выбор" | "Пузырек";
 
 type ArrayElement = {
   value: number;
-  state: ElementStates;
+  state?: ElementStates;
 };
 
 export const SortingPage: React.FC = () => {
-                                    // заменить тип number[] на <ArrayElement[]>
+                                    
   const [arrayToRender, setArrayToRender] = useState<ArrayElement[]>([]);
-
   const [algorithmChecked, setAlgorithmChecked] = useState<Algorithm>("Выбор");
-
   const [isLoader, setIsLoader] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  //const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [direction, setDirection] = useState("");
 
 
 
-  // При загрузке страницы генерируется случайный массив
+  // При загрузке страницы генерируется массив
   useEffect(() => {
     renderGeneratedArray();
   }, []);
@@ -91,12 +89,15 @@ export const SortingPage: React.FC = () => {
   const renderGeneratedArray = () => {
     setArrayToRender([]);
     const generatedArray = generateRandomArray();
-
+    
+    // ЗДЕСЬ ЧТО-ТО ПОШЛО НЕ ТАК!
     const arrayToRenderInitialState = generatedArray.map((arrayElement) => ({
       value: arrayElement,
       state: ElementStates.Default
-    }))
+    })) as ArrayElement[];
+    console.log(arrayToRenderInitialState) // ЗДЕСЬ МАССИВ ОБЪЕКТОВ
     setArrayToRender([...arrayToRenderInitialState]);
+    console.log(arrayToRender); // А ЗДЕСЬ ПУСТОЙ МАССИВ!
   };
 
 
@@ -106,43 +107,101 @@ export const SortingPage: React.FC = () => {
   const sortArrayInAscendingOrder = () => {
   
     if (algorithmChecked === "Выбор") {
-      setIsLoader(true)
+      setIsLoader(true);
+      setDirection("Ascending");
+      
+     
       // сортирую выбором по возрастанию
-      const arraySortedSelectionAscending = sortSelectionAscending(arrayToRender);
+      const arraySortedSelectionAscending = sortSelectionAscending(arrayToRender, setArrayToRender);
       console.log(arraySortedSelectionAscending);
       // помещаю отсортированный массив в стейт
       setArrayToRender([...arraySortedSelectionAscending]);
+      
+      setIsLoader(false);
     } else if (algorithmChecked === "Пузырек") {
-      setIsLoader(true)
+      setIsLoader(true);
+      setDirection("Ascending");
+     
       // сортирую пузырьком по возрастанию
       const arraySortedBubbleAscending = sortBubbleAscending(arrayToRender);
       console.log(arraySortedBubbleAscending); 
       setArrayToRender([...arraySortedBubbleAscending]);
+      setIsLoader(false);
     }
 
   }
 
 
   // Запускаю сортировку по убыванию (выбором либо пузырьком)
-  const sortArrayInDescendingOrder = () => {
+  const sortArrayInDescendingOrder = async () => {
 
     if (algorithmChecked === "Выбор") {
+      setIsLoader(true);
+      setDirection("Descending");
+      await delay(1000);
       // сортирую выбором по убыванию
       const arraySortedSelectionDescending = sortSelectionDescending(arrayToRender);
       console.log(arraySortedSelectionDescending);
       // записываю результат в стейт
       setArrayToRender([...arraySortedSelectionDescending]);
+      setIsLoader(false);
     } else if (algorithmChecked === "Пузырек") {
+      setIsLoader(true);
+      setDirection("Descending");
+      await delay(1000);
       // сортирую пузырьком по убыванию
       const arraySortedBubbleDescending = sortBubbleDescending(arrayToRender);
       console.log(arraySortedBubbleDescending); 
       // записываю результат в стейт
       setArrayToRender([...arraySortedBubbleDescending]);
+      setIsLoader(false);
     }
 
   }
 
-// НАПИСАТЬ ФУНКЦИЮ, ОПРЕДЕЛЯЮЩУЮ, НА КАКОЙ ИМЕННО КНОПКЕ В ДАННЫЙ МОМЕНТ АКТИВЕН ЛОУДЕР.
+// Определяю, активен ли лоудер кнопки "По возрастанию"
+const isAscendingLoaderActive = () => {
+  if (direction === "Ascending" && isLoader) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Определяю, активен ли лоудер кнопки "По убыванию"
+const isDescendingLoaderActive = () => {
+  if (direction === "Descending" && isLoader) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+// Настройка disabled у кнопок
+const isAscendingButtonDisabled = () => {
+  if (direction === "Descending" && isLoader) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const isDescendingButtonDisabled = () => {
+  if (direction === "Ascending" && isLoader) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const isNewArrayButtonDisabled = () => {
+  if (isLoader) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 
   return (
@@ -173,8 +232,8 @@ export const SortingPage: React.FC = () => {
           extraClass={styles.ascendingButton} 
           onClick={sortArrayInAscendingOrder}
           sorting={Direction.Ascending}
-          isLoader={isLoader} // вызвать здесь функцию, которая определит, какой именно лоудер активен
-          // disabled={} пока хз как определить
+          isLoader={isAscendingLoaderActive()}
+          disabled={isAscendingButtonDisabled()}
         />
         <Button 
           text="По убыванию" 
@@ -182,8 +241,8 @@ export const SortingPage: React.FC = () => {
           extraClass={styles.descendingButton}
           onClick={sortArrayInDescendingOrder}
           sorting={Direction.Descending}
-          isLoader={isLoader} // вызвать здесь функцию, которая определит, какой именно лоудер активен
-          // disabled={} пока хз как определить 
+          isLoader={isDescendingLoaderActive()}
+          disabled={isDescendingButtonDisabled()}
         />
         </div> 
         <Button 
@@ -191,6 +250,7 @@ export const SortingPage: React.FC = () => {
           type="button" 
           extraClass={styles.renderNewArrayButton}
           onClick={renderGeneratedArray}
+          disabled={isNewArrayButtonDisabled()}
         />
       </form>
       
