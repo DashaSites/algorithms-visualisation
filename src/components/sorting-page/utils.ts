@@ -16,7 +16,7 @@ const swap = (arr: ArrayElement[], firstIndex: number, secondIndex: number): voi
 };
 
 
-// + Сортировка выбором по возрастанию
+// ++ Сортировка выбором по возрастанию
 export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   const { length } = arr;
   
@@ -39,10 +39,9 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
         console.log("newMinInd", minInd)
       }
     }
-    console.log("array before swap", arr)
 
     swap(arr, leftIndex, minInd);
-    console.log("array after swap", arr)
+
     arr[minInd].state = ElementStates.Default;
     arr[arr.length-1].state = ElementStates.Default;
     arr[leftIndex].state = ElementStates.Modified;
@@ -57,45 +56,86 @@ console.log(`отсортированный выбором по возраста
 };
 
 
-// + Сортировка выбором по убыванию
-export const sortSelectionDescending = (arr: ArrayElement[]) => {
+// ++ Сортировка выбором по убыванию
+export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   const { length } = arr;
-  for (let i = 0; i < length - 1; i++) {
+
+  for (let i = 0; i <= length - 1; i++) {
     let maxInd = i;
+    arr[maxInd].state = ElementStates.Changing;
+    setArr([...arr]);
+    await delay(1000)
+
     for (let j = i + 1; j < length; j++) {
-      if (arr[j] > arr[maxInd]) {
+      arr[j].state = ElementStates.Changing;
+      if (j > i + 1) {
+        arr[j-1].state = ElementStates.Default;
+      }
+      setArr([...arr]);
+      await delay(1000)
+
+      if (arr[j].value > arr[maxInd].value) {
         maxInd = j;
+        console.log("newMaxInd", maxInd)
       }
     }
+
     swap(arr, i, maxInd);
+
+    arr[maxInd].state = ElementStates.Default;
+    arr[arr.length-1].state = ElementStates.Default;
+    arr[i].state = ElementStates.Modified;
+
+    setArr([...arr]);
+    await delay(1000)
+
   }
   console.log(`отсортированный выбором по убыванию: ${arr}`);
+  setArr([...arr]);
   return arr;
 };
 
 
-// + Сортировка пузырьком по возрастанию
-export const sortBubbleAscending = (array: ArrayElement[]) => {
+
+
+
+
+//////////
+// ВНЕШНИЙ ЦИКЛ ПРОХОДИТ ОДИН РАЗ И ОСТАНАВЛИВАЕТСЯ
+// Сортировка пузырьком по возрастанию
+export const sortBubbleAscending = async (array: ArrayElement[], setArray: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length; j++) {
-      if (array[j+1] < array[j]) {
+      array[j].state = ElementStates.Changing;
+      array[j+1].state = ElementStates.Changing; // Здесь надо что-то поправить
+      setArray([...array]);
+      await delay(1000)
+
+      if (array[j+1].value < array[j].value) {
         let temp = array[j];
         array[j] = array[j+1];
         array[j+1] = temp;
       }
+      array[j].state = ElementStates.Default;
+      setArray([...array]);
+      await delay(1000)
     }
-  }
-  return array;
 
+    array[array.length-1].state = ElementStates.Modified;
+    setArray([...array]);
+    await delay(1000) 
+  }
+
+  setArray([...array]);
+  return array;
 }
 
 
 // + Сортировка пузырьком по убыванию
-export const sortBubbleDescending = (array: ArrayElement[]) => {
+export const sortBubbleDescending = async (array: ArrayElement[], setArray: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length; j++) {
-      if (array[j+1] > array[j]) {
-        
+      if (array[j+1].value > array[j].value) {
         let temp = array[j];
         array[j] = array[j+1];
         array[j+1] = temp;

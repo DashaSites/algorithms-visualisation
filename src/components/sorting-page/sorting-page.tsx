@@ -75,15 +75,6 @@ export const SortingPage: React.FC = () => {
   }
 
 
-
-  // Превращаю сгенерированный массив в массив объектов и записываю его в стейт
-  // const renderGeneratedArray = () => {
-  //   setArrayToRender([]);
-  //   const generatedArray = generateRandomArray();
-
-  //   setArrayToRender([...generatedArray]);
-  // }
-
   const renderGeneratedArray = async () => {
     setArrayToRender([]);
     const generatedArray = generateRandomArray();
@@ -104,7 +95,6 @@ export const SortingPage: React.FC = () => {
       setIsLoader(true);
       setDirection("Ascending");
       
-     
       // сортирую выбором по возрастанию
       const arraySortedSelectionAscending = await sortSelectionAscending(arrayToRender, setArrayToRender);
       console.log(arraySortedSelectionAscending);
@@ -117,7 +107,7 @@ export const SortingPage: React.FC = () => {
       setDirection("Ascending");
      
       // сортирую пузырьком по возрастанию
-      const arraySortedBubbleAscending = sortBubbleAscending(arrayToRender);
+      const arraySortedBubbleAscending = await sortBubbleAscending(arrayToRender, setArrayToRender);
       console.log(arraySortedBubbleAscending); 
       setArrayToRender([...arraySortedBubbleAscending]);
       setIsLoader(false);
@@ -132,9 +122,9 @@ export const SortingPage: React.FC = () => {
     if (algorithmChecked === "Выбор") {
       setIsLoader(true);
       setDirection("Descending");
-      await delay(1000);
+      
       // сортирую выбором по убыванию
-      const arraySortedSelectionDescending = sortSelectionDescending(arrayToRender);
+      const arraySortedSelectionDescending = await sortSelectionDescending(arrayToRender, setArrayToRender);
       console.log(arraySortedSelectionDescending);
       // записываю результат в стейт
       setArrayToRender([...arraySortedSelectionDescending]);
@@ -142,9 +132,9 @@ export const SortingPage: React.FC = () => {
     } else if (algorithmChecked === "Пузырек") {
       setIsLoader(true);
       setDirection("Descending");
-      await delay(1000);
+      
       // сортирую пузырьком по убыванию
-      const arraySortedBubbleDescending = sortBubbleDescending(arrayToRender);
+      const arraySortedBubbleDescending = await sortBubbleDescending(arrayToRender, setArrayToRender);
       console.log(arraySortedBubbleDescending); 
       // записываю результат в стейт
       setArrayToRender([...arraySortedBubbleDescending]);
