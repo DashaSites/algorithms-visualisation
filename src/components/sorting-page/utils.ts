@@ -16,7 +16,7 @@ const swap = (arr: ArrayElement[], firstIndex: number, secondIndex: number): voi
 };
 
 
-// ++ Сортировка выбором по возрастанию
+// Сортировка выбором по возрастанию
 export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   const { length } = arr;
   
@@ -56,7 +56,7 @@ console.log(`отсортированный выбором по возраста
 };
 
 
-// ++ Сортировка выбором по убыванию
+// Сортировка выбором по убыванию
 export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   const { length } = arr;
 
@@ -97,17 +97,12 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
 
 
 
-
-
-
-//////////
-// ВНЕШНИЙ ЦИКЛ ПРОХОДИТ ОДИН РАЗ И ОСТАНАВЛИВАЕТСЯ
 // Сортировка пузырьком по возрастанию
 export const sortBubbleAscending = async (array: ArrayElement[], setArray: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < array.length; j++) {
+    for (let j = 0; j < array.length-i-1; j++) {
       array[j].state = ElementStates.Changing;
-      array[j+1].state = ElementStates.Changing; // Здесь надо что-то поправить
+      array[j+1].state = ElementStates.Changing;
       setArray([...array]);
       await delay(1000)
 
@@ -117,16 +112,12 @@ export const sortBubbleAscending = async (array: ArrayElement[], setArray: React
         array[j+1] = temp;
       }
       array[j].state = ElementStates.Default;
-      setArray([...array]);
-      await delay(1000)
     }
 
-    array[array.length-1].state = ElementStates.Modified;
+    array[array.length-i-1].state = ElementStates.Modified;
     setArray([...array]);
-    await delay(1000) 
   }
 
-  setArray([...array]);
   return array;
 }
 
@@ -134,14 +125,22 @@ export const sortBubbleAscending = async (array: ArrayElement[], setArray: React
 // + Сортировка пузырьком по убыванию
 export const sortBubbleDescending = async (array: ArrayElement[], setArray: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < array.length; j++) {
+    for (let j = 0; j < array.length-i-1; j++) {
+      array[j].state = ElementStates.Changing;
+      array[j+1].state = ElementStates.Changing;
+      setArray([...array]);
+      await delay(1000)
+
       if (array[j+1].value > array[j].value) {
         let temp = array[j];
         array[j] = array[j+1];
         array[j+1] = temp;
-
       }
+      array[j].state = ElementStates.Default;
     }
+    
+    array[array.length-i-1].state = ElementStates.Modified;
+    setArray([...array]);
   }
   return array;
 }
