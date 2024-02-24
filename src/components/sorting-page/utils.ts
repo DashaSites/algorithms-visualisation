@@ -1,14 +1,10 @@
 import { ElementStates } from "../../types/element-states";
 import { delay } from "../../universal-functions/delay";
+import { ArrayElement } from "./sorting-page";
 
 
 
-type ArrayElement = {
-  value: number;
-  state?: ElementStates;
-};
-
-// + Общая функция swap
+// Общая функция swap
 const swap = (arr: ArrayElement[], firstIndex: number, secondIndex: number): void => {
   const temp = arr[firstIndex];
   arr[firstIndex] = arr[secondIndex];
@@ -122,7 +118,7 @@ export const sortBubbleAscending = async (array: ArrayElement[], setArray: React
 }
 
 
-// + Сортировка пузырьком по убыванию
+// Сортировка пузырьком по убыванию
 export const sortBubbleDescending = async (array: ArrayElement[], setArray: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length-i-1; j++) {
