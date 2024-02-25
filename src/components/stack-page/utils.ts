@@ -1,5 +1,5 @@
 
-// Тип элементов, хранящихся в стеке
+// Тип элемента, хранящегося в стеке
 type StackType<T> = {
   push: (item: T) => void;
   pop: () => void;
@@ -9,7 +9,8 @@ type StackType<T> = {
 };
 
 
-export class Stack<T> implements StackType<T> {
+export class Stack<T> implements StackType<T> { // <T> БУДЕТ ОБЪЕКТОМ
+  
   private container: T[] = [];
 
   push = (item: T): void => {
@@ -30,11 +31,14 @@ export class Stack<T> implements StackType<T> {
     }
   };
 
-  // Длина стека
+  // Возвращает текущую длину стека
   getSize = () => this.container.length;
 
-  // Все элементы стека
+  // Возвращает массив элементов стека
   getElements = () => {
-    return this.container;
+    return [
+      ...this.container
+    ];
   };
+  
 }
