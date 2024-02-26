@@ -16,11 +16,46 @@ export type CircleElement = {
 };
 
 
+// 1) ДОБАВИТЬ 7 КРУЖКОВ С ИНДЕКСАМИ
+// 2) СОЗДАТЬ КЛАСС QUEUE
+// 3) СОХРАНИТЬ В ЭТОМ КОМПОНЕНТЕ ПРОЕКЦИЮ ОЧЕРЕДИ-КЛАССА
+
+const initialArray = [
+  { 
+    value: "",
+    state: ElementStates.Default
+  },
+  { 
+    value: "",
+    state: ElementStates.Default
+  },  
+  { 
+    value: "",
+    state: ElementStates.Default
+  },
+  { 
+    value: "",
+    state: ElementStates.Default
+  },
+  { 
+    value: "",
+    state: ElementStates.Default
+  },
+  { 
+    value: "",
+    state: ElementStates.Default
+  },
+  { 
+    value: "",
+    state: ElementStates.Default
+  }
+]
+
+
 export const QueuePage: React.FC = () => {
 
   const [inputValue, setInputValue] = useState("");
-
-
+  const [arrayToRender, setArrayToRender] = useState(initialArray);
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,13 +69,7 @@ export const QueuePage: React.FC = () => {
 
 
 
-
-
-
-
-
-
-
+const testQueue = ["2", "4", "6", "8", "3", "5", "7"]
 
   return (
     <SolutionLayout title="Очередь">
@@ -83,17 +112,17 @@ export const QueuePage: React.FC = () => {
       </form>
 
       <ul className={styles.circlesBlock}>
-        {/* {testQueue.map((element, index) => (
+        {arrayToRender.map((element, index) => (
           <li key={index}>
             <Circle
               index={index}
               letter={element.value}
-              state={element.state}
+              //state={element.state}
               //head={index === stack.getSize()-1 ? "top" : ""}
               //tail={}
             />
           </li>
-        ))} */}
+        ))}
       </ul>
     </SolutionLayout>
   );

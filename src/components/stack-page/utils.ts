@@ -1,5 +1,4 @@
 
-// Тип элемента, хранящегося в стеке
 type StackType<T> = {
   push: (item: T) => void;
   pop: () => void;
