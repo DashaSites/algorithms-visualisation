@@ -9,7 +9,6 @@ import { Stack } from "./utils";
 import { delay } from "../../universal-functions/delay";
 
 
-// 3) РАЗОБРАТЬСЯ С head НАД ПРАВЫМ КРУЖКОМ
 
 // Тип объекта, который при запушивании первого элемента отрендерится в массиве объектов
 export type CircleElement = { 
@@ -24,8 +23,8 @@ export const StackPage: React.FC = () => {
   const [stackOperation, setStackOperation] = useState("");
   const stackRef = useRef(new Stack<CircleElement>());
 
-  const stack = stackRef.current;
-  // Получаю массив элементов из стека. Таким образом инициализируется пустой массив:
+  const stack = stackRef.current; // сохраняю проекцию стека
+  // Получаю массив элементов из стека. Таким образом инициализируется первый, пустой массив:
   const [stackElements, setStackElements] = useState(stack.getElements());
 
   console.log(stack.getElements())
@@ -37,11 +36,10 @@ export const StackPage: React.FC = () => {
 
 
   const handlePush = async () => {
-
     setStackOperation("Добавляю");
 
     if (inputValue) {
-      stack.push({ // Кладу в массив стека объект, в котором есть и строка, и цвет кружка
+      stack.push({ // кладу в массив стека объект, в котором есть и строка, и цвет кружка
         value: inputValue,
         state: ElementStates.Changing
       })
@@ -55,13 +53,10 @@ export const StackPage: React.FC = () => {
     setStackElements(stack.getElements());
 
     setStackOperation("");
-
-
   }
 
 
   const handlePop = async () => {
-
     setStackOperation("Удаляю");
 
     stack.peak()!.state = ElementStates.Changing; // обновляю свойство цвета
@@ -72,7 +67,6 @@ export const StackPage: React.FC = () => {
     setStackElements(stack.getElements());
 
     setStackOperation("");
-
   }
 
 
@@ -89,7 +83,7 @@ export const StackPage: React.FC = () => {
   }
 
 
-  // Настройка лоудера для кнопки "Добавить"
+  // Настройка лоудеров
   const isAddButtonLoaderActive = () => {
     if (stackOperation === "Добавляю" && isLoader) {
       return true;
@@ -98,7 +92,6 @@ export const StackPage: React.FC = () => {
     }
   }
 
-  // Настройка лоудера для кнопки "Удалить"
   const isDeleteButtonLoaderActive = () => {
     if (stackOperation === "Удаляю" && isLoader) {
       return true;
@@ -107,7 +100,6 @@ export const StackPage: React.FC = () => {
     }
   }
   
-
   // Настройка дизейбла для кнопок "Удалить" и "Очистить"
   const isDeleteOptionDisabled = () => {
     const stackLength = stack.getSize();
@@ -126,9 +118,9 @@ export const StackPage: React.FC = () => {
         <div className={styles.controlsSubBlock}>
           <div className={styles.inputBlock}>
             <Input
-              placeholder = "Введите значение"
-              type ="text" 
-              extraClass ={styles.input}
+              placeholder="Введите значение"
+              type="text" 
+              extraClass={styles.input}
               maxLength={4}
               value={inputValue}
               onChange={handleChange}  
@@ -167,7 +159,7 @@ export const StackPage: React.FC = () => {
               index={index} // номер индекса элемента
               letter={element.value} // введенное в инпут value
               state={element.state}
-              //head={} сделать проверку: если это последний элемент, то написать над ним "top"
+              head={index === stack.getSize()-1 ? "top" : ""}
             />
           </li>
         ))}

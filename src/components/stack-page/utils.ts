@@ -23,6 +23,7 @@ export class Stack<T> implements StackType<T> { // <T> БУДЕТ ОБЪЕКТО
     }
   };
 
+  // Возвращает последний добавленный элемент
   peak = (): T | null => {
     if (this.container.length) {
       return this.container[this.container.length-1];
@@ -40,5 +41,5 @@ export class Stack<T> implements StackType<T> { // <T> БУДЕТ ОБЪЕКТО
       ...this.container
     ];
   };
-  
+
 }
