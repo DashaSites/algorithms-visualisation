@@ -1,0 +1,54 @@
+.controlsBlock {
+  display: flex;
+  justify-content: space-between;
+  margin-right: auto;
+  margin-bottom: 78px;
+  margin-left: auto;
+  width: 829px;
+  height: 86px;
+}
+
+.controlsSubBlock {
+  width: 660px;
+  height: 86px;
+  display: flex;
+  gap: 12px;
+}
+
+.inputBlock {
+  width: 377px;
+  height: 86px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  color: #7A7A7A;
+  width: 377px;
+}
+
+.subscript {
+  margin: 0;
+  padding: 0;
+  padding-left: 16px;
+  text-align: left;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.circlesBlock {
+  height: 80px;
+  max-width: 1000px;
+  list-style: none;
+  margin-top: 0;
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  row-gap: 60px;
+  flex-wrap: wrap;
+}
