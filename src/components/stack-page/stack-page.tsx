@@ -9,10 +9,10 @@ import { Stack } from "./utils";
 import { delay } from "../../universal-functions/delay";
 
 
-// 3) СДЕЛАТЬ 2 ФУНКЦИИ АСИНХРОННЫМИ, И ВНУТРИ НИХ КРАСИТЬ КРУЖКИ НА ПОЛСЕКУНДЫ
+// 3) РАЗОБРАТЬСЯ С head НАД ПРАВЫМ КРУЖКОМ
 
 // Тип объекта, который при запушивании первого элемента отрендерится в массиве объектов
-export type CircleElement = {
+export type CircleElement = { 
   value: string;
   state?: ElementStates;
 };
@@ -22,7 +22,6 @@ export const StackPage: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [isLoader, setIsLoader] = useState(false);
   const [stackOperation, setStackOperation] = useState("");
-  //const [outputArray, setOutputArray] = useState([]);
   const stackRef = useRef(new Stack<CircleElement>());
 
   const stack = stackRef.current;
@@ -37,27 +36,37 @@ export const StackPage: React.FC = () => {
   }
 
 
-  const handlePush = () => {
+  const handlePush = async () => {
 
     setStackOperation("Добавляю");
 
     if (inputValue) {
       stack.push({ // Кладу в массив стека объект, в котором есть и строка, и цвет кружка
         value: inputValue,
-        state: ElementStates.Default
+        state: ElementStates.Changing
       })
       setStackElements(stack.getElements()); // обновляю проекцию стека
       setInputValue(""); // очищаю инпут
     }
 
+    await delay(500);
+
+    stack.peak()!.state = ElementStates.Default; // обновляю свойство цвета
+    setStackElements(stack.getElements());
+
     setStackOperation("");
+
 
   }
 
 
-  const handlePop = () => {
+  const handlePop = async () => {
 
     setStackOperation("Удаляю");
+
+    stack.peak()!.state = ElementStates.Changing; // обновляю свойство цвета
+
+    await delay(500);
 
     stack.pop();
     setStackElements(stack.getElements());
@@ -110,8 +119,6 @@ export const StackPage: React.FC = () => {
   }
 
 
-
-//const testStack = [2, 5, 4, 7, 8, 3, 77]
 
   return (
     <SolutionLayout title="Стек">
