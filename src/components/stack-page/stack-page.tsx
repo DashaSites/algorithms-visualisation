@@ -8,11 +8,11 @@ import { ElementStates } from "../../types/element-states";
 import { Stack } from "./utils";
 import { delay } from "../../universal-functions/delay";
 
-// 1) + ПРИ НАЖАТИИ НА КНОПКУ СТАВИТЬ НА НЕЕ ЛОУДЕР, А ОСТАЛЬНЫЕ КНОПКИ ДИЗЕЙБЛИТЬ
-// 2) СОХРАНИТЬ В СТЕЙТ НЕ СТЕК=МАССИВ СТРОК, А СТЕК=МАССИВ ОБЪЕКТОВ
+
 // 3) СДЕЛАТЬ 2 ФУНКЦИИ АСИНХРОННЫМИ, И ВНУТРИ НИХ КРАСИТЬ КРУЖКИ НА ПОЛСЕКУНДЫ
 
-export type CircleElement = { // Тип объекта, который отрендерится в массиве объектов
+// Тип объекта, который при запушивании первого элемента отрендерится в массиве объектов
+export type CircleElement = {
   value: string;
   state?: ElementStates;
 };
@@ -23,25 +23,14 @@ export const StackPage: React.FC = () => {
   const [isLoader, setIsLoader] = useState(false);
   const [stackOperation, setStackOperation] = useState("");
   //const [outputArray, setOutputArray] = useState([]);
-  const stackRef = useRef(new Stack<string>());
+  const stackRef = useRef(new Stack<CircleElement>());
 
   const stack = stackRef.current;
   // Получаю массив элементов из стека. Таким образом инициализируется пустой массив:
   const [stackElements, setStackElements] = useState(stack.getElements());
 
-///// ИСПЫТАНИЯ
-  // Получаю изначальное значение массива объектов: {value: число, state: ElementStates.Default}
-  const getOutputElementsInitialState = (input: string) => {
-      return {
-          value: input,
-          state: ElementStates.Default,
-        }
-  }
+  console.log(stack.getElements())
 
-  const blaBla = getOutputElementsInitialState("345")
-
-  console.log(blaBla)
-/////
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -53,7 +42,10 @@ export const StackPage: React.FC = () => {
     setStackOperation("Добавляю");
 
     if (inputValue) {
-      stack.push(inputValue);
+      stack.push({ // Кладу в массив стека объект, в котором есть и строка, и цвет кружка
+        value: inputValue,
+        state: ElementStates.Default
+      })
       setStackElements(stack.getElements()); // обновляю проекцию стека
       setInputValue(""); // очищаю инпут
     }
@@ -166,8 +158,8 @@ export const StackPage: React.FC = () => {
           <li key={index}>
             <Circle
               index={index} // номер индекса элемента
-              letter={element} // введенное в инпут value
-              //state={element.state}
+              letter={element.value} // введенное в инпут value
+              state={element.state}
               //head={} сделать проверку: если это последний элемент, то написать над ним "top"
             />
           </li>
