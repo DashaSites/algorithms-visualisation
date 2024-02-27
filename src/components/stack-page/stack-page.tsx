@@ -21,6 +21,7 @@ export const StackPage: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [isLoader, setIsLoader] = useState(false);
   const [stackOperation, setStackOperation] = useState("");
+
   const stackRef = useRef(new Stack<CircleElement>());
 
   const stack = stackRef.current; // сохраняю проекцию стека
@@ -49,7 +50,7 @@ export const StackPage: React.FC = () => {
 
     await delay(500);
 
-    stack.peak()!.state = ElementStates.Default; // обновляю свойство цвета
+    stack.peak()!.state = ElementStates.Default; // перекрашиваю кружок обратно
     setStackElements(stack.getElements());
 
     setStackOperation("");

@@ -5,10 +5,11 @@ type QueueType<T> = {
   isEmpty: () => boolean;
   getElements: () => (T | null)[];
   getTail: () => T | null;
+  clear: () => void;
 };
 
 
-export class Queue<T> implements QueueType<T> {
+export class Queue<T> implements QueueType<T> { // <T> БУДЕТ ОБЪЕКТОМ
   private container: (T | null)[] = []; 
   private head = 0; // переменная для отслеживания начала
   private tail = 0; // переменная для отслеживания конца
@@ -16,7 +17,7 @@ export class Queue<T> implements QueueType<T> {
   private length: number = 0; // length не может превышать size
 
   constructor(size: number) {
-    this.size = size;
+    this.size = size; 
     this.container = Array(size); 
   }
 
@@ -44,7 +45,7 @@ export class Queue<T> implements QueueType<T> {
   };
 
 
-  // возвращаю элемент, который лежит в начале очереди
+  // возвращаю элемент head, который лежит в начале очереди
   peek = (): T | null => {
     if (this.isEmpty()) {
       throw new Error("No elements in the queue");
@@ -59,17 +60,26 @@ export class Queue<T> implements QueueType<T> {
   }
 
 
-  // возвращаю все элементы массива
+  // Возвращает массив элементов очереди
   getElements = () => {
-    return this.container;
-  }
+    return [
+      ...this.container
+    ];
+  };
+
 
 
   // возвращаю последний элемент массива
   getTail = () => {
-    return this.container[this.length - 1];
+    return this.container[this.tail - 1];
+  }
+
+  // обнуляю массив в контейнере
+  clear = () => {
+    this.container = Array(7); 
   }
 }
+
 
 
 

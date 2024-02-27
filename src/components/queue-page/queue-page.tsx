@@ -5,7 +5,7 @@ import { Button } from "../ui/button/button";
 import { Input } from "../ui/input/input";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
-//import { Stack } from "./utils"; // Здесь будет Queue //
+import { Queue } from "./utils";
 import { delay } from "../../universal-functions/delay";
 
 
@@ -16,22 +16,23 @@ export type CircleElement = {
 };
 
 
-// 1) ДОБАВИТЬ 7 КРУЖКОВ С ИНДЕКСАМИ
-// 2) СОЗДАТЬ КЛАСС QUEUE
-// 3) СОХРАНИТЬ В ЭТОМ КОМПОНЕНТЕ ПРОЕКЦИЮ ОЧЕРЕДИ-КЛАССА
 
 const initialArray = [
   { 
-    value: "",
-    state: ElementStates.Default
+    value: "a",
+    state: ElementStates.Changing
   },
   { 
-    value: "",
-    state: ElementStates.Default
+    value: "b",
+    state: ElementStates.Changing
   },  
   { 
-    value: "",
-    state: ElementStates.Default
+    value: "c",
+    state: ElementStates.Changing
+  },
+  { 
+    value: "d",
+    state: ElementStates.Changing
   },
   { 
     value: "",
@@ -39,15 +40,11 @@ const initialArray = [
   },
   { 
     value: "",
-    state: ElementStates.Default
+    state: ElementStates.Changing
   },
   { 
-    value: "",
-    state: ElementStates.Default
-  },
-  { 
-    value: "",
-    state: ElementStates.Default
+    value: "afg",
+    state: ElementStates.Changing
   }
 ]
 
@@ -55,7 +52,18 @@ const initialArray = [
 export const QueuePage: React.FC = () => {
 
   const [inputValue, setInputValue] = useState("");
-  const [arrayToRender, setArrayToRender] = useState(initialArray);
+  const [ arrayToRender, setArrayToRender] = useState(initialArray);
+  const [operation, setOperation] = useState("");
+
+  // Создаю экземпляр класса
+  const queueRef = useRef(new Queue<CircleElement>(7));
+  // Cохраняю объект экземпляра класса в переменной queue
+  const queue = queueRef.current;
+  // Получаю массив из 7 undefined элементов из очереди
+  const [queueElements, setQueueElements] = useState(queue.getElements());
+
+
+  console.log(`getElements() from queue`, queue.getElements()); 
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,13 +71,63 @@ export const QueuePage: React.FC = () => {
   }
 
 
-  console.log(inputValue)
+  // Добавление элемента
+  const addElement = async () => {
+    setOperation("Добавляю")
+    
+    if (inputValue) {
+      queue.enqueue({ // кладу в массив очереди объект, в котором есть строка и стейт кружка
+        value: inputValue,
+        state: ElementStates.Changing
+      })
+
+      setQueueElements(queue.getElements()); // обновляю проекцию очереди
+
+      setInputValue(""); // очищаю инпут
+    }
+
+    await delay(500);
+
+    queue.getTail()!.state = ElementStates.Default;
+    setQueueElements(queue.getElements());
+
+    setOperation("");
+  }
+
+  // Удаление элемента
+  const deleteElement = async () => {
+
+    setOperation("Удаляю");
+
+    queue.peek()!.state = ElementStates.Changing;
+
+    await delay(500);
+
+    queue.dequeue();
+    setQueueElements(queue.getElements());
 
 
+    setOperation("");
+  }
 
 
+  // Обнуление массива
+  const resetQueue = () => {
+    queue.clear();
+    setQueueElements(queue.getElements());
+  }
 
-const testQueue = ["2", "4", "6", "8", "3", "5", "7"]
+
+  // Настройка дизейбла для кнопок "Удалить" и "Очистить"
+  const isDeleteOptionDisabled = () => {
+    if (queue.isEmpty() === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
 
   return (
     <SolutionLayout title="Очередь">
@@ -89,37 +147,35 @@ const testQueue = ["2", "4", "6", "8", "3", "5", "7"]
           <Button
             text="Добавить" 
             type="button"
-            //onClick={handleAddToQueue}
-            //isLoader={isAddButtonLoaderActive()}
-            disabled={inputValue ? false : true}
+            onClick={addElement}
+            disabled={!inputValue || queueElements[6] !== undefined ? true : false}
           />
           <Button 
             text="Удалить" 
             type="button"
-            //onClick={handleDeleteFromQueue}
-            //isLoader={isDeleteButtonLoaderActive()}
-            //disabled={isDeleteOptionDisabled()}
+            onClick={deleteElement}
+            disabled={isDeleteOptionDisabled()}
           />
         </div>
         <div>
           <Button 
             text="Очистить" 
             type="button"
-            //onClick={handleReset}
-            //disabled={isDeleteOptionDisabled()}
+            onClick={resetQueue}
+            disabled={isDeleteOptionDisabled()}
           />
         </div>
       </form>
 
       <ul className={styles.circlesBlock}>
-        {arrayToRender.map((element, index) => (
+        {queueElements.map((element, index) => (
           <li key={index}>
             <Circle
               index={index}
-              letter={element.value}
-              //state={element.state}
-              //head={index === stack.getSize()-1 ? "top" : ""}
-              //tail={}
+              letter={element ? element.value : ""}
+              state={element ? element.state : ElementStates.Default}
+              head={element !== undefined && element === queue.peek() ? "head" : ""}
+              tail={element !== undefined && element === queue.getTail() ? "tail" : ""}
             />
           </li>
         ))}
