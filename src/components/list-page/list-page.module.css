@@ -1,0 +1,79 @@
+.controlsContainer {
+  width: 952px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.controlsBlock {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.inputBlock {
+  width: 204px;
+  height: 86px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  color: #7A7A7A;
+  width: 204px;
+}
+
+.subscript {
+  margin: 0;
+  padding: 0;
+  padding-left: 16px;
+  text-align: left;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.buttonsBlock {
+  display: flex;
+  gap: 12px;
+}
+
+.buttonsByIndexBlock {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 12px;
+}
+
+.buttonByIndex {
+  width: 362px;
+}
+
+.circlesBlock {
+  height: 170px;
+  max-width: 1000px;
+  list-style: none;
+  margin-top: 90px;
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  row-gap: 100px;
+}
+
+.circleBlock {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  margin-right: 16px;
+  margin-left: 16px;
+}
+
+
+
