@@ -1,3 +1,8 @@
+// + // Алгоритм, куда добавила tail
+// ++ // Алгоритм, который проверен и работает
+
+
+
 // Нода, в которой хранится пара value и next
 export class Node<T> {
   value: T;
@@ -19,29 +24,32 @@ type LinkedListType<T> = {
   toArray: () => T[]; // возвращаю массив с нодами
 };
 
-export class LinkedList<T> implements LinkedListType<T> {
+export class LinkedList<T> implements LinkedListType<T> { 
   private head: Node<T> | null;
   private tail: Node<T> | null;
   private size: number;
-  constructor() {
+
+  constructor(initialArrayToRender: T[]) { // Первоначальный массив приходит из компонента
     this.head = null;
     this.tail = null;
     this.size = 0;
+    // Каждый из передаваемых элементов массива помещаю в список
+    initialArrayToRender.forEach(element => this.append(element));
   }
 
  
-  // вернуть последний элемент из списка
+  // ++ вернуть последний элемент из списка
   getTail = () => {
     let current: Node<T> | null = this.head;
     while (current?.next) {
       current = current.next;
     }
-    return current;
+    return current?.value;
   };
 
 
 
-  // + Добавить элемент в конец списка
+  // ++ Добавить элемент в конец списка
   append(element: T) {
     const node = new Node(element);
 
@@ -56,9 +64,10 @@ export class LinkedList<T> implements LinkedListType<T> {
     this.tail = node;
 
     this.size++;
+
   }
 
-  // Добавить элемент в начало списка
+  // ++ Добавить элемент в начало списка
   prepend(element: T) {
     const node = new Node(element, this.head);
 
@@ -69,10 +78,12 @@ export class LinkedList<T> implements LinkedListType<T> {
     }
 
     this.size++;
+
+    return this;
   }
 
 
-  // Удалить первый элемент из списка
+  // ++ Удалить первый элемент из списка
   deleteHead() {
     if (this.head === null) {
       return null;
@@ -120,15 +131,15 @@ export class LinkedList<T> implements LinkedListType<T> {
 
   // Вернуть весь список в массиве
   toArray = () => {
-    let myArray = [];
+    let outputArray = [];
     let current = this.head;
 
     while (current) { // итерируемся столько раз, сколько есть элементов
-      myArray.push(current.value);
+      outputArray.push(current.value);
       current = current.next;
     }
 
-    return myArray;
+    return outputArray;
   }
 
 

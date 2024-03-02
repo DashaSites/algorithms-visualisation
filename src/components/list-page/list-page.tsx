@@ -6,7 +6,7 @@ import { Input } from "../ui/input/input";
 import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { delay } from "../../universal-functions/delay";
-//import { LinkedList } from "./utils";
+import { LinkedList } from "./utils";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
 
 
@@ -41,6 +41,41 @@ const initialArray: CircleElement[] = [
 
 export const ListPage: React.FC = () => {
 
+  // Создаю экземпляр класса
+  const linkedListRef = useRef(new LinkedList<CircleElement>(initialArray));
+
+  // Cохраняю объект экземпляра класса в переменной linkedList
+  const linkedList = linkedListRef.current;
+
+  // Получаю массив из элементов связного списка
+  const [linkedListElements, setLinkedListElements] = useState(linkedList.toArray());
+
+
+
+
+
+
+
+  const handleAddElementToHead = () => {
+
+  }
+
+
+
+
+
+  const handleAddElementToTail = () => {
+
+  }
+
+
+
+
+
+  const handleDeleteHead = () => {
+    linkedList.deleteHead();
+    setLinkedListElements(linkedList.toArray());
+  }
 
 
 
@@ -50,7 +85,14 @@ export const ListPage: React.FC = () => {
 
 
 
-  
+
+
+
+
+
+
+
+
 
   
   return (
@@ -72,19 +114,19 @@ export const ListPage: React.FC = () => {
             <Button
               text="Добавить в head"
               type="button"
-              //onClick={}
+              onClick={handleAddElementToHead}
               //disabled={}
             />
             <Button
               text="Добавить в tail"
               type="button"
-              //onClick={}
+              onClick={handleAddElementToTail}
               //disabled={}
             />
             <Button
               text="Удалить из head"
               type="button"
-              //onClick={}
+              onClick={handleDeleteHead}
               //disabled={}
             />
             <Button
@@ -123,7 +165,7 @@ export const ListPage: React.FC = () => {
         </form>
       </div>
       <ul className={styles.circlesBlock}>
-        {initialArray.map((element, index) => (
+        {linkedListElements.map((element, index) => (
           <li key={index} className={styles.circleBlock}>
             <Circle
               index={index} // номер индекса элемента
@@ -131,9 +173,9 @@ export const ListPage: React.FC = () => {
               state={element.state} // цвет кружка
               extraClass={styles.circle}
               //head={}
-              //tail={}
+              tail={element !== undefined && element === linkedList.getTail() ? "tail" : ""}
             />
-            {index < initialArray.length-1 ? <ArrowIcon /> : null}
+            {index < linkedListElements.length-1 ? <ArrowIcon /> : null}
           </li>
         ))}
 
