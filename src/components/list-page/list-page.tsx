@@ -47,6 +47,7 @@ export const ListPage: React.FC = () => {
   // Cохраняю объект экземпляра класса в переменной linkedList
   const linkedList = linkedListRef.current;
 
+
   // Получаю массив из элементов связного списка
   const [linkedListElements, setLinkedListElements] = useState(linkedList.toArray());
 
@@ -57,6 +58,7 @@ export const ListPage: React.FC = () => {
 
 
   const handleAddElementToHead = () => {
+
 
   }
 
@@ -75,6 +77,15 @@ export const ListPage: React.FC = () => {
   const handleDeleteHead = () => {
     linkedList.deleteHead();
     setLinkedListElements(linkedList.toArray());
+    console.log(linkedListElements)
+  }
+
+  
+
+  const handleDeleteTail = () => {
+    linkedList.deleteTail();
+    setLinkedListElements(linkedList.toArray());
+    console.log(linkedListElements)
   }
 
 
@@ -132,8 +143,8 @@ export const ListPage: React.FC = () => {
             <Button
               text="Удалить из tail"
               type="button"
-              //onClick={}
-              //disabled={}
+              onClick={handleDeleteTail}
+              //disabled={handleDeleteTail}
             />
           </div>
         </form>

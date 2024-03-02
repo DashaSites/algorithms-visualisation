@@ -1,6 +1,3 @@
-// + // Алгоритм, куда добавила tail
-// ++ // Алгоритм, который проверен и работает
-
 
 
 // Нода, в которой хранится пара value и next
@@ -17,8 +14,8 @@ type LinkedListType<T> = {
   append: (element: T) => void;
   prepend: (element: T) => void;
   deleteHead: () => Node<T> | null;
-  //deleteTail: () => Node<T> | null;
-  //addByIndex: (element: T, index: number) => void;
+  deleteTail: () => Node<T> | null;
+  addByIndex: (element: T, index: number) => void;
   //deleteByIndex: (index: number) => void;
   getSize: () => number;
   toArray: () => T[]; // возвращаю массив с нодами
@@ -37,8 +34,14 @@ export class LinkedList<T> implements LinkedListType<T> {
     initialArrayToRender.forEach(element => this.append(element));
   }
 
- 
-  // ++ вернуть последний элемент из списка
+
+  // ++ вернуть первый элемент
+  getHead = () => {
+    return this.head;
+  }
+
+
+  // ++ вернуть последний элемент
   getTail = () => {
     let current: Node<T> | null = this.head;
     while (current?.next) {
@@ -48,12 +51,11 @@ export class LinkedList<T> implements LinkedListType<T> {
   };
 
 
-
   // ++ Добавить элемент в конец списка
   append(element: T) {
     const node = new Node(element);
 
-    if (this.head === null) {
+    if (!this.head) {
       this.head = node;
     } 
 
@@ -66,6 +68,7 @@ export class LinkedList<T> implements LinkedListType<T> {
     this.size++;
 
   }
+
 
   // ++ Добавить элемент в начало списка
   prepend(element: T) {
@@ -85,7 +88,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
   // ++ Удалить первый элемент из списка
   deleteHead() {
-    if (this.head === null) {
+    if (!this.head) {
       return null;
     }
 
@@ -95,6 +98,7 @@ export class LinkedList<T> implements LinkedListType<T> {
       this.head = this.head.next;
     } else { // если в списке всего один элемент
       this.head = null;
+      this.tail = null;
     }
 
     this.size--;
@@ -102,28 +106,83 @@ export class LinkedList<T> implements LinkedListType<T> {
   }
 
 
-
-
+  // ++ Удалить последний элемент из списка
   deleteTail() {
-    if (this.head === null) {
+    if (!this.head) {
       return null;
     }
 
-    // Получить элемент tail и положить его в переменную
-    // Если список состоит из одного элемента (head === tail), то обнулить heaf
-    // Положить this.head во временную переменную current
-    // Итерироваться по списку, пока current не сравняется с tail, увеличивая
-    // этот показатель на единицу
-    // Обнулить последний элемент: current.next = null
-    // Присвоить последнему элементу значение current: tail = current
-    // ДЛЯ ЭТОГО НАДО СОХРАНИТЬ tail В КОНСТРУКТОРЕ
+    const deletedTail = this.tail;
+    if (this.head === this.tail) {
+      this.head = null;
+      this.tail = null;
+      return deletedTail;
+    }
 
+    // найти предпоследний элемент списка и сделать его новым хвостом
+    let current = this.head;
+    while (current.next) {
+      if (!current.next.next) {
+        current.next = null;
+      } else {
+        current = current.next;
+      }
+    }
 
+    this.tail = current;
+    this.size--;
 
+    return deletedTail;
   }
 
 
-  // Вернуть размер списка
+  // Добавить элемент по индексу
+  addByIndex = (element: T, index: number) => {
+    if (index < 0 || index > this.size) {
+      console.log('Enter a valid index');
+      return;
+    } else {
+      const node = new Node(element);
+
+      
+      if (index === 0) { // добавить элемент в начало списка
+        node.next = this.head;
+        this.head = node;
+      } else {
+        let current = this.head; // начало отсчета, чтобы добраться до нужного индекса
+        let currentIndex = 0;
+        
+        while (currentIndex < index) {
+          currentIndex++;
+          if (current?.next !== null && currentIndex !== index) {
+            if (current) {
+              current = current.next;
+            }
+          }
+        }
+
+        // добавить элемент по индексу
+        if (current) {
+          node.next = current.next;
+          current.next = node;
+        }
+      }
+      this.size++;
+    }
+  }
+
+
+
+
+  // Удалить элемент по индексу
+  // deleteByIndex = (index: number) => {
+
+  // }
+
+
+
+
+  // ++ Вернуть размер списка
   getSize = () => {
     return this.size;
   }
