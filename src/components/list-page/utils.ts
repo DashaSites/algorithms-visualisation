@@ -136,7 +136,7 @@ export class LinkedList<T> implements LinkedListType<T> {
   }
 
 
-  // Добавить элемент по индексу
+  // ++ Добавить элемент по индексу
   addByIndex = (element: T, index: number) => {
     if (index < 0 || index > this.size) {
       console.log('Enter a valid index');
@@ -169,8 +169,8 @@ export class LinkedList<T> implements LinkedListType<T> {
       }
       this.size++;
     }
+    return this;
   }
-
 
 
 

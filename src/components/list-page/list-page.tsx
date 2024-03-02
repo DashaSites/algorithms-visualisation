@@ -41,15 +41,23 @@ const initialArray: CircleElement[] = [
 
 export const ListPage: React.FC = () => {
 
+  const [inputValue, setInputValue] = useState("");
+  const [operation, setOperation] = useState("");
+
+
+
+
+
   // Создаю экземпляр класса
   const linkedListRef = useRef(new LinkedList<CircleElement>(initialArray));
-
   // Cохраняю объект экземпляра класса в переменной linkedList
   const linkedList = linkedListRef.current;
-
-
   // Получаю массив из элементов связного списка
   const [linkedListElements, setLinkedListElements] = useState(linkedList.toArray());
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  }
 
 
 
@@ -80,7 +88,7 @@ export const ListPage: React.FC = () => {
     console.log(linkedListElements)
   }
 
-  
+
 
   const handleDeleteTail = () => {
     linkedList.deleteTail();
@@ -116,8 +124,8 @@ export const ListPage: React.FC = () => {
               type="text"
               extraClass={styles.input}
               maxLength={4}
-              //value={inputValue}
-              //onChange={handleChange}  
+              value={inputValue}
+              onChange={handleChange}  
             />
             <p className={styles.subscript}>Максимум — 4 символа</p>
           </div>
@@ -151,7 +159,7 @@ export const ListPage: React.FC = () => {
         <form className={styles.controlsBlock}>
           <Input
             placeholder="Введите индекс"
-            type="text"
+            type="number"
             extraClass={styles.input}
             maxLength={4}
             //value={inputValue}
