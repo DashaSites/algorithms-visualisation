@@ -11,19 +11,21 @@ export class Node<T> {
 type LinkedListType<T> = {
   append: (element: T) => void;
   prepend: (element: T) => void;
-  deleteFromHead: () => Node<T> | null;
-  //deleteFromTail: () => Node<T> | null;
+  deleteHead: () => Node<T> | null;
+  //deleteTail: () => Node<T> | null;
   //addByIndex: (element: T, index: number) => void;
   //deleteByIndex: (index: number) => void;
-  //getSize: () => number;
+  getSize: () => number;
+  toArray: () => T[]; // возвращаю массив с нодами
 };
 
 export class LinkedList<T> implements LinkedListType<T> {
   private head: Node<T> | null;
+  private tail: Node<T> | null;
   private size: number;
   constructor() {
     this.head = null;
-    // СОХРАНИТЬ tail В КОНСТРУКТОРЕ!
+    this.tail = null;
     this.size = 0;
   }
 
@@ -37,42 +39,46 @@ export class LinkedList<T> implements LinkedListType<T> {
     return current;
   };
 
-  // добавить элемент в конец списка
+
+
+  // + Добавить элемент в конец списка
   append(element: T) {
     const node = new Node(element);
 
     if (this.head === null) {
       this.head = node;
-    } else {
-      const tail = this.getTail()!;
+    } 
 
-      tail.next = node;
+    if (this.tail) {
+      this.tail.next = node;
     }
+
+    this.tail = node;
+
     this.size++;
   }
 
-  // добавить элемент в начало списка
+  // Добавить элемент в начало списка
   prepend(element: T) {
-    const node = new Node(element);
+    const node = new Node(element, this.head);
 
-    if (this.head === null) {
-      this.head = node;
-    } else {
-      node.next = this.head;
-      this.head = node;
+    this.head = node;
+
+    if (!this.tail) {
+      this.tail = node;
     }
 
     this.size++;
   }
 
 
-  // удалить первый элемент из списка
-  deleteFromHead() {
+  // Удалить первый элемент из списка
+  deleteHead() {
     if (this.head === null) {
       return null;
     }
 
-    const deletedElement = this.head;
+    const deletedHead = this.head;
 
     if (this.head.next) { // если в списке минимум два элемента
       this.head = this.head.next;
@@ -81,13 +87,13 @@ export class LinkedList<T> implements LinkedListType<T> {
     }
 
     this.size--;
-    return deletedElement;
+    return deletedHead;
   }
 
 
 
 
-  deleteFromTail() {
+  deleteTail() {
     if (this.head === null) {
       return null;
     }
@@ -103,6 +109,26 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
+  }
+
+
+  // Вернуть размер списка
+  getSize = () => {
+    return this.size;
+  }
+
+
+  // Вернуть весь список в массиве
+  toArray = () => {
+    let myArray = [];
+    let current = this.head;
+
+    while (current) { // итерируемся столько раз, сколько есть элементов
+      myArray.push(current.value);
+      current = current.next;
+    }
+
+    return myArray;
   }
 
 
