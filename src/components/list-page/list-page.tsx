@@ -55,6 +55,7 @@ export const ListPage: React.FC = () => {
   // Получаю массив из элементов связного списка
   const [linkedListElements, setLinkedListElements] = useState(linkedList.toArray());
 
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   }
@@ -66,6 +67,7 @@ export const ListPage: React.FC = () => {
 
 
   const handleAddElementToHead = () => {
+
 
   }
 
@@ -190,7 +192,7 @@ export const ListPage: React.FC = () => {
               letter={element.value} // введенное в инпут value
               state={element.state} // цвет кружка
               extraClass={styles.circle}
-              //head={}
+              head={index === 0 ? "head" : null}
               tail={element !== undefined && element === linkedList.getTail() ? "tail" : ""}
             />
             {index < linkedListElements.length-1 ? <ArrowIcon /> : null}

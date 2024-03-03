@@ -16,7 +16,7 @@ type LinkedListType<T> = {
   deleteHead: () => Node<T> | null;
   deleteTail: () => Node<T> | null;
   addByIndex: (element: T, index: number) => void;
-  //deleteByIndex: (index: number) => void;
+  deleteByIndex: (index: number) => void;
   getSize: () => number;
   toArray: () => T[]; // возвращаю массив с нодами
 };
@@ -32,12 +32,6 @@ export class LinkedList<T> implements LinkedListType<T> {
     this.size = 0;
     // Каждый из передаваемых элементов массива помещаю в список
     initialArrayToRender.forEach(element => this.append(element));
-  }
-
-
-  // ++ вернуть первый элемент
-  getHead = () => {
-    return this.head;
   }
 
 
@@ -220,7 +214,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // Вернуть весь список в массиве
+  // ++ Вернуть весь список в массиве
   toArray = () => {
     let outputArray = [];
     let current = this.head;
