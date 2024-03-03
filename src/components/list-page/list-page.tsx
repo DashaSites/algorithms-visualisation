@@ -77,10 +77,10 @@ const getHead = (index: number) => {
       if (currentStatus === ElementStates.Changing) {
         return (
           <Circle
-                letter={inputValue} // введенное в инпут value
-                state={ElementStates.Changing} 
-                isSmall={true}
-              />
+            letter={inputValue}
+            state={ElementStates.Changing} 
+            isSmall={true}
+          />
         )
       } else {
         return "head"
@@ -88,54 +88,68 @@ const getHead = (index: number) => {
     } else {
       return null
     }
-
-
-  } else if (currentOperation === "Добавляю по индексу") {
-    // cycle 
+  } else if (currentOperation === "Добавляю в конец списка") {
+    if (index === linkedList.getSize()-1) {
+      if (currentStatus === ElementStates.Changing) {
+        return (
+          <Circle
+            letter={inputValue}
+            state={ElementStates.Changing} 
+            isSmall={true}
+          />
+        )
+      } else {
+        return "tail"
+      }
+    } else {
+      return null
+    }
+  } //else if (currentOperation === "Добавляю по индексу") {
+    // Цикл. До прохода по циклу завести дополнительную переменную-стейт, и ее перебирать в цикле
+    //
+    //
+    //
   
-  }
+  //}
 
-  return index === 0 ? "head" : null;
+  if (index === 0) {
+    return "head";
+  } else if (index === linkedList.getSize()-1) {
+    return "tail";
+  } else {
+    return null;
+  }
 } 
 
 
 
 const getTail = (index: number) => {
 
-  // if (currentOperation === "Добавляю в конец списка") {
-
-  // }
-
 }
 
 
 
-
+///////////////////////////////////////////////////
 
   // Добавить элемент в начало списка 
   const addElementToHead = async () => {
     setCurrentOperation("Добавляю в начало списка");
-
     setCurrentStatus(ElementStates.Changing)
-
     await delay(1000)
-
     setCurrentStatus(ElementStates.Modified)
 
     const newNode = { value: inputValue, state: ElementStates.Modified}
 
 
     if (inputValue) {
-      linkedList.prepend(newNode)
-
+      linkedList.prepend(newNode);
       setLinkedListElements(linkedList.toArray()); // обновляю проекцию списка
-      
       setInputValue("")
     }
 
-    await delay(1000)
+    await delay(1000);
 
-    setCurrentStatus(ElementStates.Default)
+    setCurrentStatus(ElementStates.Default);
     newNode.state = ElementStates.Default;
     setLinkedListElements(linkedList.toArray());
 
@@ -148,16 +162,23 @@ const getTail = (index: number) => {
   // Добавить элемент в конец списка 
   const addElementToTail = async () => {
     setCurrentOperation("Добавляю в конец списка");
+    setCurrentStatus(ElementStates.Changing)
+    await delay(1000)
+    setCurrentStatus(ElementStates.Modified)
+
+    const newNode = { value: inputValue, state: ElementStates.Modified}
 
     if (inputValue) {
-      linkedList.append({
-        value: inputValue,
-        state: ElementStates.Changing
-      })
-
-      setLinkedListElements(linkedList.toArray()); // обновляю проекцию списка
+      linkedList.append(newNode);
+      setLinkedListElements(linkedList.toArray());
       setInputValue(""); // очищаю инпут
     }
+
+    await delay(1000);
+
+    setCurrentStatus(ElementStates.Default);
+    newNode.state = ElementStates.Default;
+    setLinkedListElements(linkedList.toArray());
 
 
     setCurrentOperation("");
