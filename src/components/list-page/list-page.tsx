@@ -67,7 +67,6 @@ export const ListPage: React.FC = () => {
 
   const handleAddElementToHead = () => {
 
-
   }
 
 

@@ -41,6 +41,7 @@ export class LinkedList<T> implements LinkedListType<T> {
   }
 
 
+
   // ++ вернуть последний элемент
   getTail = () => {
     let current: Node<T> | null = this.head;
@@ -49,6 +50,7 @@ export class LinkedList<T> implements LinkedListType<T> {
     }
     return current?.value;
   };
+
 
 
   // ++ Добавить элемент в конец списка
@@ -70,6 +72,7 @@ export class LinkedList<T> implements LinkedListType<T> {
   }
 
 
+
   // ++ Добавить элемент в начало списка
   prepend(element: T) {
     const node = new Node(element, this.head);
@@ -84,6 +87,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
     return this;
   }
+
 
 
   // ++ Удалить первый элемент из списка
@@ -104,6 +108,7 @@ export class LinkedList<T> implements LinkedListType<T> {
     this.size--;
     return deletedHead;
   }
+
 
 
   // ++ Удалить последний элемент из списка
@@ -134,6 +139,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
     return deletedTail;
   }
+
 
 
   // ++ Добавить элемент по индексу
@@ -174,11 +180,36 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // Удалить элемент по индексу
-  // deleteByIndex = (index: number) => {
+  // ++ Удалить элемент по индексу
+  deleteByIndex = (index: number) => {
 
-  // }
+    if (index < 0 || index >= this.size) {
+      console.log('Enter a valid index');
+      return;
+    }
 
+    if (!this.head) {
+      return null;
+    }
+
+    let removedNode;
+
+    if (index === 0) {
+      removedNode = this.head;
+      this.head = this.head.next;
+    } else { // если индекс больше ноля и валидный
+      let previous = this.head;
+      for (let i = 0; i < index-1; i++) {
+        previous = previous.next!;
+      }
+      removedNode = previous.next;
+      previous.next = removedNode!.next;
+
+    }
+    this.size--;
+    console.log(removedNode)
+    return removedNode;
+  }
 
 
 
@@ -186,6 +217,7 @@ export class LinkedList<T> implements LinkedListType<T> {
   getSize = () => {
     return this.size;
   }
+
 
 
   // Вернуть весь список в массиве
@@ -200,11 +232,5 @@ export class LinkedList<T> implements LinkedListType<T> {
 
     return outputArray;
   }
-
-
-
-
-
-
 
 }
