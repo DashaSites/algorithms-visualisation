@@ -46,7 +46,7 @@ export class LinkedList<T> implements LinkedListType<T> {
   };
 
 
-
+  
   // ++ Добавить элемент в конец списка
   append(element: T) {
     const node = new Node(element);
