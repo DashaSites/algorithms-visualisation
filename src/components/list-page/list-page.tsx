@@ -98,9 +98,7 @@ const getHead = (index: number) => {
             isSmall={true}
           />
         )
-      } else {
-        return "tail"
-      }
+      } 
     } else {
       return null
     }
@@ -114,8 +112,6 @@ const getHead = (index: number) => {
 
   if (index === 0) {
     return "head";
-  } else if (index === linkedList.getSize()-1) {
-    return "tail";
   } else {
     return null;
   }
@@ -124,6 +120,12 @@ const getHead = (index: number) => {
 
 
 const getTail = (index: number) => {
+
+  if (index === linkedList.getSize()-1) {
+    return "tail";
+  } else {
+    return null;
+  }
 
 }
 
@@ -329,7 +331,7 @@ const deleteElementByIndex = () => {
               state={element.state} // цвет кружка
               extraClass={styles.circle}
               head={getHead(index)} //index === 0 ? "head" : null
-              //tail={getTail(index)} // index === linkedList.getSize()-1 ? "tail" : ""
+              tail={getTail(index)} // index === linkedList.getSize()-1 ? "tail" : ""
               //isSmall={true}
             />
             {index < linkedListElements.length-1 ? <ArrowIcon /> : null}
