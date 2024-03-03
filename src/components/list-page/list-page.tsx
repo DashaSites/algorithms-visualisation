@@ -119,7 +119,24 @@ const getHead = (index: number) => {
 
 
 
-const getTail = (index: number) => {
+const getTail = (index: number, element: CircleElement) => {
+
+  if (currentOperation === "Удаляю из начала списка") {
+    if (index === 0) {
+      if (currentStatus === ElementStates.Changing) {
+        return (
+          <Circle
+            letter={element.value} // Число, которые было первым
+            state={ElementStates.Changing} 
+            isSmall={true}
+          />
+        )
+      } 
+    } else {
+      return null;
+    }
+  }
+
 
   if (index === linkedList.getSize()-1) {
     return "tail";
@@ -133,7 +150,7 @@ const getTail = (index: number) => {
 
 ///////////////////////////////////////////////////
 
-  // Добавить элемент в начало списка 
+  // + Добавить элемент в начало списка 
   const addElementToHead = async () => {
     setCurrentOperation("Добавляю в начало списка");
     setCurrentStatus(ElementStates.Changing)
@@ -161,12 +178,12 @@ const getTail = (index: number) => {
 
 
 
-  // Добавить элемент в конец списка 
+  // + Добавить элемент в конец списка 
   const addElementToTail = async () => {
     setCurrentOperation("Добавляю в конец списка");
-    setCurrentStatus(ElementStates.Changing)
-    await delay(1000)
-    setCurrentStatus(ElementStates.Modified)
+    setCurrentStatus(ElementStates.Changing);
+    await delay(1000);
+    setCurrentStatus(ElementStates.Modified);
 
     const newNode = { value: inputValue, state: ElementStates.Modified}
 
@@ -189,18 +206,22 @@ const getTail = (index: number) => {
 
 
 
-  // Удалить элемент из начала списка
+  // + Удалить элемент из начала списка
   const deleteHeadElement = async () => {
-
+    setCurrentOperation("Удаляю из начала списка");
+    setCurrentStatus(ElementStates.Changing);
+    await delay(1000);
     linkedList.deleteHead();
+    setCurrentStatus(ElementStates.Default);
     setLinkedListElements(linkedList.toArray());
-
+    setCurrentOperation("");
   }
 
 
 
   // Удалить элемент из конца списка
   const deleteTailElement = async () => {
+    
 
     linkedList.deleteTail();
     setLinkedListElements(linkedList.toArray());
@@ -327,11 +348,11 @@ const deleteElementByIndex = () => {
           <li key={index} className={styles.circleBlock}>
             <Circle
               index={index} // номер индекса элемента
-              letter={element.value} // введенное в инпут value
+              letter={index === 0 && currentOperation === "Удаляю из начала списка" ? "" : element.value } // введенное в инпут value
               state={element.state} // цвет кружка
               extraClass={styles.circle}
               head={getHead(index)} //index === 0 ? "head" : null
-              tail={getTail(index)} // index === linkedList.getSize()-1 ? "tail" : ""
+              tail={getTail(index, element)} // index === linkedList.getSize()-1 ? "tail" : ""
               //isSmall={true}
             />
             {index < linkedListElements.length-1 ? <ArrowIcon /> : null}
