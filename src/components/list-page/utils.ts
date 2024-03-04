@@ -42,6 +42,7 @@ export class LinkedList<T> implements LinkedListType<T> {
     while (current?.next) {
       current = current.next;
     }
+    console.log(current?.value)
     return current?.value;
   };
 

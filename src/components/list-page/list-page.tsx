@@ -315,25 +315,29 @@ const isLetterEmpty = (index: number) => {
               text="Добавить в head"
               type="button"
               onClick={addElementToHead}
-              //disabled={}
+              disabled={!inputValue ? true : false}
+              isLoader={currentOperation === "Добавляю в начало списка" ? true : false}
             />
             <Button
               text="Добавить в tail"
               type="button"
               onClick={addElementToTail}
-              //disabled={}
+              disabled={!inputValue ? true : false}
+              isLoader={currentOperation === "Добавляю в конец списка" ? true : false}
             />
             <Button
               text="Удалить из head"
               type="button"
               onClick={deleteHeadElement}
-              //disabled={}
+              disabled={linkedList.getTail() == null ? true : false}
+              isLoader={currentOperation === "Удаляю из начала списка" ? true : false}
             />
             <Button
               text="Удалить из tail"
               type="button"
               onClick={deleteTailElement}
-              //disabled={handleDeleteTail}
+              disabled={linkedList.getTail() == null ? true : false}
+              isLoader={currentOperation === "Удаляю из конца списка" ? true : false}
             />
           </div>
         </form>
@@ -352,14 +356,14 @@ const isLetterEmpty = (index: number) => {
               type="button"
               extraClass={styles.buttonByIndex}
               onClick={addElementByIndex}
-              //disabled={}
+              disabled={!inputValue || !indexValue ? true : false }
             />
             <Button
               text="Удалить по индексу"
               type="button"
               extraClass={styles.buttonByIndex}
               onClick={deleteElementByIndex}
-              //disabled={}
+              disabled={!indexValue ? true : false }
             />
           </div>
         </form>
@@ -374,7 +378,6 @@ const isLetterEmpty = (index: number) => {
               extraClass={styles.circle}
               head={getHead(index)} //index === 0 ? "head" : null
               tail={getTail(index, element)} // index === linkedList.getSize()-1 ? "tail" : ""
-              //isSmall={true}
             />
             {index < linkedListElements.length-1 ? <ArrowIcon /> : null}
           </li>
