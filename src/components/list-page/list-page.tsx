@@ -45,6 +45,7 @@ export const ListPage: React.FC = () => {
   const [indexValue, setIndexValue] = useState("");
   const [currentOperation, setCurrentOperation] = useState("");
   const [currentStatus, setCurrentStatus] = useState(ElementStates.Default);
+  const [currentPinkHeaderIndex, setCurrentPinkHeaderIndex] = useState(0);
 
 
   // Создаю экземпляр класса
@@ -68,7 +69,7 @@ export const ListPage: React.FC = () => {
 
 
 
-
+// Все, что касается отображения верхних розовых кружков
 const getHead = (index: number) => {
 
   if (currentOperation === "Добавляю в начало списка") {
@@ -102,13 +103,30 @@ const getHead = (index: number) => {
     } else {
       return null
     }
-  } //else if (currentOperation === "Добавляю по индексу") {
-    // Цикл. До прохода по циклу завести дополнительную переменную-стейт, и ее перебирать в цикле
-    //
-    //
-    //
+  } else if (currentOperation === "Добавляю по индексу") {
+    // Индекс, куда надо вставить новый элемент, - лежит в переменной indexValue
+    // Переменная currentPinkHeaderIndex - для перебора в цикле
+    // До того как приземлиться в indexValue, кружок будет "прыгать" по currentPinkHeaderIndex.
+
+    const targetIndex = parseInt(indexValue);
+
+    // СЮДА ВПИСАТЬ ДОПОЛНИТЕЛЬНОЕ УСЛОВИЕ. А ДО НЕГО НАДО СОЗДАТЬ ЦИКЛ,
+    // И ПРОВЕРЯТЬ ЭТО УСЛОВИЕ НА КАЖДОМ ШАГЕ ЦИКЛА.
+
+    if (currentStatus === ElementStates.Changing) {
+      return (
+        <Circle
+          letter={inputValue}
+          state={ElementStates.Changing} 
+          isSmall={true}
+        />
+      )
+    }
+
+
+
   
-  //}
+  }
 
   if (index === 0) {
     return "head";
@@ -119,6 +137,9 @@ const getHead = (index: number) => {
 
 
 
+
+
+// Отображение нижних розовых кружков
 const getTail = (index: number, element: CircleElement) => {
 
   if (currentOperation === "Удаляю из начала списка") {
@@ -177,7 +198,7 @@ const getTail = (index: number, element: CircleElement) => {
     if (inputValue) {
       linkedList.prepend(newNode);
       setLinkedListElements(linkedList.toArray()); // обновляю проекцию списка
-      setInputValue("")
+      setInputValue("") 
     }
 
     await delay(1000);
@@ -247,14 +268,17 @@ const getTail = (index: number, element: CircleElement) => {
 
 
 
-
-  const addElementByIndex = () => {
+// Добавить элемент по индексу
+  const addElementByIndex = async () => {
     setCurrentOperation("Добавляю по индексу");
-    
+    setCurrentStatus(ElementStates.Changing);
+    await delay(1000);
+
+  
     if (inputValue && indexValue) {
       linkedList.addByIndex({
         value: inputValue,
-        state: ElementStates.Changing
+        state: ElementStates.Modified
       }, parseInt(indexValue))
 
       setLinkedListElements(linkedList.toArray()); // обновляю проекцию списка
@@ -269,7 +293,7 @@ const getTail = (index: number, element: CircleElement) => {
 
 
 
-
+// Удалить элемент по индексу
 const deleteElementByIndex = () => {
   setCurrentOperation("Удаляю по индексу");
 
