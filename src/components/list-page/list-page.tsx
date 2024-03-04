@@ -126,12 +126,26 @@ const getTail = (index: number, element: CircleElement) => {
       if (currentStatus === ElementStates.Changing) {
         return (
           <Circle
-            letter={element.value} // Число, которые было первым
+            letter={element.value}
             state={ElementStates.Changing} 
             isSmall={true}
           />
         )
       } 
+    } else {
+      return null;
+    }
+  } else if (currentOperation === "Удаляю из конца списка") {
+    if (index === linkedList.getSize()-1) {
+      if (currentStatus === ElementStates.Changing) {
+        return (
+          <Circle
+            letter={element.value} // Число, которые было последним
+            state={ElementStates.Changing} 
+            isSmall={true}
+          />
+        )
+      }
     } else {
       return null;
     }
@@ -219,13 +233,15 @@ const getTail = (index: number, element: CircleElement) => {
 
 
 
-  // Удалить элемент из конца списка
+  // + Удалить элемент из конца списка
   const deleteTailElement = async () => {
-    
-
+    setCurrentOperation("Удаляю из конца списка");
+    setCurrentStatus(ElementStates.Changing);
+    await delay(1000);
     linkedList.deleteTail();
+    setCurrentStatus(ElementStates.Default);
     setLinkedListElements(linkedList.toArray());
-
+    setCurrentOperation("");
   }
 
 
@@ -266,11 +282,16 @@ const deleteElementByIndex = () => {
 }
 
 
-
-
-
-
-
+// Определяю, есть в ли сейчас в данном кружке значение или нет
+const isLetterEmpty = (index: number) => {
+  if (index === 0 && currentOperation === "Удаляю из начала списка") {
+    return true;
+  } else if (index === linkedList.getSize()-1 && currentOperation === "Удаляю из конца списка") {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 
   
@@ -348,7 +369,7 @@ const deleteElementByIndex = () => {
           <li key={index} className={styles.circleBlock}>
             <Circle
               index={index} // номер индекса элемента
-              letter={index === 0 && currentOperation === "Удаляю из начала списка" ? "" : element.value } // введенное в инпут value
+              letter={ isLetterEmpty(index) ? "" : element.value } // введенное в инпут value
               state={element.state} // цвет кружка
               extraClass={styles.circle}
               head={getHead(index)} //index === 0 ? "head" : null
