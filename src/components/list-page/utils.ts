@@ -36,7 +36,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // ++ вернуть последний элемент
+  // Вернуть последний элемент
   getTail = () => {
     let current: Node<T> | null = this.head;
     while (current?.next) {
@@ -47,7 +47,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
   
-  // ++ Добавить элемент в конец списка
+  // Добавить элемент в конец списка
   append(element: T) {
     const node = new Node(element);
 
@@ -67,7 +67,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // ++ Добавить элемент в начало списка
+  // Добавить элемент в начало списка
   prepend(element: T) {
     const node = new Node(element, this.head);
 
@@ -84,7 +84,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // ++ Удалить первый элемент из списка
+  // Удалить первый элемент из списка
   deleteHead() {
     if (!this.head) {
       return null;
@@ -105,7 +105,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // ++ Удалить последний элемент из списка
+  // Удалить последний элемент из списка
   deleteTail() {
     if (!this.head) {
       return null;
@@ -136,7 +136,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // ++ Добавить элемент по индексу
+  // Добавить элемент по индексу
   addByIndex = (element: T, index: number) => {
     if (index < 0 || index > this.size) {
       console.log('Enter a valid index');
@@ -174,7 +174,7 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // ++ Удалить элемент по индексу
+  // Удалить элемент по индексу
   deleteByIndex = (index: number) => {
 
     if (index < 0 || index >= this.size) {
@@ -207,14 +207,14 @@ export class LinkedList<T> implements LinkedListType<T> {
 
 
 
-  // ++ Вернуть размер списка
+  // Вернуть размер списка
   getSize = () => {
     return this.size;
   }
 
 
 
-  // ++ Вернуть весь список в массиве
+  // Вернуть весь список в массиве
   toArray = () => {
     let outputArray = [];
     let current = this.head;
@@ -226,5 +226,4 @@ export class LinkedList<T> implements LinkedListType<T> {
 
     return outputArray;
   }
-
 }
