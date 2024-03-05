@@ -63,9 +63,6 @@ export const QueuePage: React.FC = () => {
   const [queueElements, setQueueElements] = useState(queue.getElements());
 
 
-  console.log(`getElements() from queue`, queue.getElements()); 
-
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   }

@@ -32,7 +32,7 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
 
       if (arr[rightIndex].value < arr[minInd].value) {
         minInd = rightIndex;
-        console.log("newMinInd", minInd)
+  
       }
     }
 
@@ -46,7 +46,6 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
     await delay(1000)
   }
 
-console.log(`отсортированный выбором по возрастанию: ${arr}`);
   setArr([...arr]);
   return arr;
 };
@@ -72,7 +71,7 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
 
       if (arr[j].value > arr[maxInd].value) {
         maxInd = j;
-        console.log("newMaxInd", maxInd)
+  
       }
     }
 
@@ -86,7 +85,7 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
     await delay(1000)
 
   }
-  console.log(`отсортированный выбором по убыванию: ${arr}`);
+
   setArr([...arr]);
   return arr;
 };

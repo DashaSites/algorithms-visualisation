@@ -59,7 +59,7 @@ export const SortingPage: React.FC = () => {
       value: arrayElement,
       state: ElementStates.Default
     })) as ArrayElement[];
-    console.log(arrayToRenderInitialState)
+
     setArrayToRender([...arrayToRenderInitialState]);
     await delay(1000)
   };
@@ -74,7 +74,7 @@ export const SortingPage: React.FC = () => {
       
       // сортирую выбором по возрастанию
       const arraySortedSelectionAscending = await sortSelectionAscending(arrayToRender, setArrayToRender);
-      console.log(arraySortedSelectionAscending);
+
       // помещаю отсортированный массив в стейт
       setArrayToRender([...arraySortedSelectionAscending]);
       
@@ -85,7 +85,7 @@ export const SortingPage: React.FC = () => {
      
       // сортирую пузырьком по возрастанию
       const arraySortedBubbleAscending = await sortBubbleAscending(arrayToRender, setArrayToRender);
-      console.log(arraySortedBubbleAscending); 
+
       setArrayToRender([...arraySortedBubbleAscending]);
       setIsLoader(false);
     }
@@ -102,7 +102,7 @@ export const SortingPage: React.FC = () => {
       
       // сортирую выбором по убыванию
       const arraySortedSelectionDescending = await sortSelectionDescending(arrayToRender, setArrayToRender);
-      console.log(arraySortedSelectionDescending);
+
       // записываю результат в стейт
       setArrayToRender([...arraySortedSelectionDescending]);
       setIsLoader(false);
@@ -112,7 +112,7 @@ export const SortingPage: React.FC = () => {
       
       // сортирую пузырьком по убыванию
       const arraySortedBubbleDescending = await sortBubbleDescending(arrayToRender, setArrayToRender);
-      console.log(arraySortedBubbleDescending); 
+ 
       // записываю результат в стейт
       setArrayToRender([...arraySortedBubbleDescending]);
       setIsLoader(false);

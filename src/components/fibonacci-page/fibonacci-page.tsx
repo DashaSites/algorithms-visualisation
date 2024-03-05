@@ -66,7 +66,6 @@ const renderArrayWithDelay = async () => {
     
     // кладу в новый специальный массив очередной элемент массива из алгоритма
     arrayToStoreValuesRenderingWithDelay.push(outputArrayWithFibonacciSequence[i]);
-    console.log(arrayToStoreValuesRenderingWithDelay);
 
     setArrayToRender([...arrayToStoreValuesRenderingWithDelay]);
     

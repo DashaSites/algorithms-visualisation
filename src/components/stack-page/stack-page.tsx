@@ -28,8 +28,6 @@ export const StackPage: React.FC = () => {
   // Получаю массив элементов из стека. Таким образом инициализируется первый, пустой массив:
   const [stackElements, setStackElements] = useState(stack.getElements());
 
-  console.log(stack.getElements())
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);

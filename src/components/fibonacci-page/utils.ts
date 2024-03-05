@@ -12,9 +12,4 @@ export const getFibonacciSequence = (n: number): number[] => {
     arr.push(arr[i - 2] + arr[i - 1])
   }
  return arr;
-} 
-
-
-
-
-//console.log(getFibonacciSequence(7));
+}
