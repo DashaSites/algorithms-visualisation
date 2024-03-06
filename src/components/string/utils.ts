@@ -67,7 +67,7 @@ export type OutputElement = {
 export const useOutputElements = (inputedValues: string, isArrayReversed: boolean): OutputElement[] => {
   // завожу пустой массив объектов, чтоб положить в него (перевернутую или нет) строку
   const [outputElements, setOutputElements] = useState<OutputElement[]>([]);
-
+  
   const reverseString = () => {
     const isArrayReversedBeforeClick = !isArrayReversed;
 
@@ -96,6 +96,7 @@ export const useOutputElements = (inputedValues: string, isArrayReversed: boolea
   useEffect(() => {
 
     const paintCircles = async () => {
+
       
       // делаем паузу в секунду
       await delay(1000);
