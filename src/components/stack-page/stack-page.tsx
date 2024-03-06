@@ -7,14 +7,9 @@ import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { Stack } from "./utils";
 import { delay } from "../../universal-functions/delay";
+import { CircleElement } from "../../types/circle-element";
 
 
-
-// Тип объекта, который при запушивании первого элемента отрендерится в массиве объектов
-export type CircleElement = { 
-  value: string;
-  state?: ElementStates;
-};
 
 export const StackPage: React.FC = () => {
 

@@ -8,14 +8,9 @@ import { ElementStates } from "../../types/element-states";
 import { delay } from "../../universal-functions/delay";
 import { LinkedList } from "./utils";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
+import { CircleElement } from "../../types/circle-element";
 
 
-
-// Тип объекта, который отрендерится в массиве объектов
-export type CircleElement = { 
-  value: string;
-  state?: ElementStates;
-};
 
 
 // Массив объектов, который рендерится при загрузке

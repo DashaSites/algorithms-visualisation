@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { ElementStates } from "../../types/element-states";
 import { delay } from "../../universal-functions/delay";
 
-///// УНИВЕРСАЛЬНЫЕ (М.Б. В БУДУЩЕМ) ФУНКЦИИ:
 
 // Какого цвета кружки будут при их ПЕРВОНАЧАЛЬНОМ появлении:
 const getOutputElementsInitialState = (
@@ -90,12 +89,9 @@ export const useOutputElements = (inputedValues: string, isArrayReversed: boolea
     setOutputElements(outputElementsInitialState);
   };
 
-
-
   useEffect(() => {
     reverseString();
   }, [isArrayReversed]);
-
 
   useEffect(() => {
 
@@ -124,13 +120,12 @@ export const useOutputElements = (inputedValues: string, isArrayReversed: boolea
 
   }, [outputElements]);
 
-
   return outputElements;
 };
 
 
 
-///// С БОЛЬШИМ ТРУДОМ ИСПРАВЛЕННЫЕ ОШИБКИ, ИЗ КОТОРЫХ Я СДЕЛАЛА ВАЖНЫЕ ВЫВОДЫ:
+///// СТРАДАНИЯ, ИЗ КОТОРЫХ Я СДЕЛАЛА ВАЖНЫЕ ВЫВОДЫ:
 // 1) Стейт (здесь - outputElements) изменяется только через сеттер (setOutputElements)
 
 // 2) В рамках одной функции лучше не вызывать сеттер больше одного раза (он срабатывает по сути асинхронно,

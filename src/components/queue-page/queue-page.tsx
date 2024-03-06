@@ -7,13 +7,7 @@ import { Circle } from "../ui/circle/circle";
 import { ElementStates } from "../../types/element-states";
 import { Queue } from "./utils";
 import { delay } from "../../universal-functions/delay";
-
-
-// Тип объекта, который отрендерится в массиве объектов
-export type CircleElement = { 
-  value: string;
-  state?: ElementStates;
-};
+import { CircleElement } from "../../types/circle-element";
 
 
 

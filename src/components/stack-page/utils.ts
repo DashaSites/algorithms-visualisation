@@ -9,7 +9,6 @@ type StackType<T> = {
 
 
 export class Stack<T> implements StackType<T> { // <T> БУДЕТ ОБЪЕКТОМ
-  
   private container: T[] = [];
 
   push = (item: T): void => {
@@ -40,5 +39,4 @@ export class Stack<T> implements StackType<T> { // <T> БУДЕТ ОБЪЕКТО
       ...this.container
     ];
   };
-
 }
