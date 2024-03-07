@@ -8,6 +8,7 @@ import { ElementStates } from "../../types/element-states";
 import { Queue } from "./utils";
 import { delay } from "../../universal-functions/delay";
 import { CircleElement } from "../../types/circle-element";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 
 
@@ -77,13 +78,15 @@ export const QueuePage: React.FC = () => {
       setInputValue(""); // очищаю инпут
     }
 
-    await delay(500);
+    await delay(SHORT_DELAY_IN_MS);
 
     queue.getTail()!.state = ElementStates.Default;
     setQueueElements(queue.getElements());
 
     setOperation("");
   }
+
+
 
   // Удаление элемента
   const deleteElement = async () => {
@@ -92,11 +95,10 @@ export const QueuePage: React.FC = () => {
 
     queue.peek()!.state = ElementStates.Changing;
 
-    await delay(500);
+    await delay(SHORT_DELAY_IN_MS);
 
     queue.dequeue();
     setQueueElements(queue.getElements());
-
 
     setOperation("");
   }

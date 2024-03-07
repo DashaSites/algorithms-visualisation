@@ -18,8 +18,6 @@ export const StringComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [isArrayReversed, setIsArrayReversed] = useState(false);
   
-  // Стейт для лоудера на кнопке
-  const [isLoader, setIsLoader] = useState(false);
   // Переключатель вкл/выкл для кнопки
   const isDisabled = inputValue ? false : true;
 
@@ -58,7 +56,6 @@ export const StringComponent: React.FC = () => {
           <Button 
             text="Развернуть" 
             type="submit"
-            isLoader={isLoader}
             disabled={isDisabled}
           />
         </form>

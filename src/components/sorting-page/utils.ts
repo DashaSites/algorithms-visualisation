@@ -1,3 +1,4 @@
+import { DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { delay } from "../../universal-functions/delay";
 import { ArrayElement } from "./sorting-page";
@@ -20,7 +21,7 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
     let minInd = leftIndex;
     arr[minInd].state = ElementStates.Changing;
     setArr([...arr]);
-    await delay(1000)
+    await delay(DELAY_IN_MS);
     
     for (let rightIndex = leftIndex + 1; rightIndex < length; rightIndex++) {
       arr[rightIndex].state = ElementStates.Changing;
@@ -28,7 +29,7 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
         arr[rightIndex-1].state = ElementStates.Default;
       }
       setArr([...arr]);
-      await delay(1000)
+      await delay(DELAY_IN_MS);
 
       if (arr[rightIndex].value < arr[minInd].value) {
         minInd = rightIndex;
@@ -43,7 +44,7 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
     arr[leftIndex].state = ElementStates.Modified;
     setArr([...arr]);
   
-    await delay(1000)
+    await delay(DELAY_IN_MS);
   }
 
   setArr([...arr]);
@@ -59,7 +60,7 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
     let maxInd = i;
     arr[maxInd].state = ElementStates.Changing;
     setArr([...arr]);
-    await delay(1000)
+    await delay(DELAY_IN_MS);
 
     for (let j = i + 1; j < length; j++) {
       arr[j].state = ElementStates.Changing;
@@ -67,7 +68,7 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
         arr[j-1].state = ElementStates.Default;
       }
       setArr([...arr]);
-      await delay(1000)
+      await delay(DELAY_IN_MS);
 
       if (arr[j].value > arr[maxInd].value) {
         maxInd = j;
@@ -82,7 +83,7 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
     arr[i].state = ElementStates.Modified;
 
     setArr([...arr]);
-    await delay(1000)
+    await delay(DELAY_IN_MS);
 
   }
 
@@ -99,7 +100,7 @@ export const sortBubbleAscending = async (array: ArrayElement[], setArray: React
       array[j].state = ElementStates.Changing;
       array[j+1].state = ElementStates.Changing;
       setArray([...array]);
-      await delay(1000)
+      await delay(DELAY_IN_MS);
 
       if (array[j+1].value < array[j].value) {
         let temp = array[j];
@@ -124,7 +125,7 @@ export const sortBubbleDescending = async (array: ArrayElement[], setArray: Reac
       array[j].state = ElementStates.Changing;
       array[j+1].state = ElementStates.Changing;
       setArray([...array]);
-      await delay(1000)
+      await delay(DELAY_IN_MS);
 
       if (array[j+1].value > array[j].value) {
         let temp = array[j];

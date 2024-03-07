@@ -6,6 +6,7 @@ import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { getFibonacciSequence } from "./utils";
 import { delay } from "../../universal-functions/delay";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 
 
@@ -62,7 +63,7 @@ const renderArrayWithDelay = async () => {
   for (let i = 0; i < outputArrayWithFibonacciSequence.length; i++) {
 
     // перед каждым шагом цикла делаю паузу в полсекунды
-    await delay(500);
+    await delay(SHORT_DELAY_IN_MS);
     
     // кладу в новый специальный массив очередной элемент массива из алгоритма
     arrayToStoreValuesRenderingWithDelay.push(outputArrayWithFibonacciSequence[i]);

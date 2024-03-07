@@ -11,6 +11,7 @@ import { sortBubbleAscending,
   sortSelectionAscending, 
   sortSelectionDescending } from "./utils";
 import { delay } from "../../universal-functions/delay";
+import { DELAY_IN_MS } from "../../constants/delays";
 
 
 type Algorithm = "Выбор" | "Пузырек"; 
@@ -25,7 +26,6 @@ export const SortingPage: React.FC = () => {
   const [arrayToRender, setArrayToRender] = useState<ArrayElement[]>([]);
   const [algorithmChecked, setAlgorithmChecked] = useState<Algorithm>("Выбор");
   const [isLoader, setIsLoader] = useState(false);
-  //const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [direction, setDirection] = useState("");
 
 
@@ -61,7 +61,7 @@ export const SortingPage: React.FC = () => {
     })) as ArrayElement[];
 
     setArrayToRender([...arrayToRenderInitialState]);
-    await delay(1000)
+    await delay(DELAY_IN_MS)
   };
 
 
@@ -149,19 +149,11 @@ const isAscendingButtonDisabled = () => {
 }
 
 const isDescendingButtonDisabled = () => {
-  if (direction === "Ascending" && isLoader) {
-    return true;
-  } else {
-    return false;
-  }
+  return direction === "Ascending" && isLoader;
 }
 
 const isNewArrayButtonDisabled = () => {
-  if (isLoader) {
-    return true;
-  } else {
-    return false;
-  }
+  return isLoader;
 }
 
 

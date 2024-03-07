@@ -8,6 +8,7 @@ import { ElementStates } from "../../types/element-states";
 import { Stack } from "./utils";
 import { delay } from "../../universal-functions/delay";
 import { CircleElement } from "../../types/circle-element";
+import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 
 
@@ -41,7 +42,7 @@ export const StackPage: React.FC = () => {
       setInputValue(""); // очищаю инпут
     }
 
-    await delay(500);
+    await delay(SHORT_DELAY_IN_MS);
 
     stack.peak()!.state = ElementStates.Default; // перекрашиваю кружок обратно
     setStackElements(stack.getElements());
@@ -55,7 +56,7 @@ export const StackPage: React.FC = () => {
 
     stack.peak()!.state = ElementStates.Changing; // обновляю свойство цвета
 
-    await delay(500);
+    await delay(SHORT_DELAY_IN_MS);
 
     stack.pop();
     setStackElements(stack.getElements());

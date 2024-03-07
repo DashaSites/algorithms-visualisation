@@ -9,6 +9,7 @@ import { delay } from "../../universal-functions/delay";
 import { LinkedList } from "./utils";
 import { ArrowIcon } from "../ui/icons/arrow-icon";
 import { CircleElement } from "../../types/circle-element";
+import { DELAY_IN_MS } from "../../constants/delays";
 
 
 
@@ -176,7 +177,7 @@ const getTail = (index: number, element: CircleElement) => {
   const addElementToHead = async () => {
     setCurrentOperation("Добавляю в начало списка");
     setCurrentStatus(ElementStates.Changing)
-    await delay(1000)
+    await delay(DELAY_IN_MS)
     setCurrentStatus(ElementStates.Modified)
 
     const newNode = { value: inputValue, state: ElementStates.Modified}
@@ -187,7 +188,7 @@ const getTail = (index: number, element: CircleElement) => {
       setInputValue("") 
     }
 
-    await delay(1000);
+    await delay(DELAY_IN_MS);
 
     setCurrentStatus(ElementStates.Default);
     newNode.state = ElementStates.Default;
@@ -202,7 +203,7 @@ const getTail = (index: number, element: CircleElement) => {
   const addElementToTail = async () => {
     setCurrentOperation("Добавляю в конец списка");
     setCurrentStatus(ElementStates.Changing);
-    await delay(1000);
+    await delay(DELAY_IN_MS);
     setCurrentStatus(ElementStates.Modified);
 
     const newNode = { value: inputValue, state: ElementStates.Modified}
@@ -213,7 +214,7 @@ const getTail = (index: number, element: CircleElement) => {
       setInputValue("");
     }
 
-    await delay(1000);
+    await delay(DELAY_IN_MS);
 
     setCurrentStatus(ElementStates.Default);
     newNode.state = ElementStates.Default;
@@ -228,7 +229,7 @@ const getTail = (index: number, element: CircleElement) => {
   const deleteHeadElement = async () => {
     setCurrentOperation("Удаляю из начала списка");
     setCurrentStatus(ElementStates.Changing);
-    await delay(1000);
+    await delay(DELAY_IN_MS);
     linkedList.deleteHead();
     setCurrentStatus(ElementStates.Default);
     setLinkedListElements(linkedList.toArray());
@@ -241,7 +242,7 @@ const getTail = (index: number, element: CircleElement) => {
   const deleteTailElement = async () => {
     setCurrentOperation("Удаляю из конца списка");
     setCurrentStatus(ElementStates.Changing);
-    await delay(1000);
+    await delay(DELAY_IN_MS);
     linkedList.deleteTail();
     setCurrentStatus(ElementStates.Default);
     setLinkedListElements(linkedList.toArray());
@@ -257,7 +258,7 @@ const getTail = (index: number, element: CircleElement) => {
 
     for (let i = 0; i <= parseInt(indexValue); i++) {
       setCurrentPinkHeaderIndex(i);
-      await delay(1000);
+      await delay(DELAY_IN_MS);
     }
 
     const newNode = { value: inputValue, state: ElementStates.Modified}
@@ -269,7 +270,7 @@ const getTail = (index: number, element: CircleElement) => {
     }
 
     setCurrentStatus(ElementStates.Default);
-    await delay(1000);
+    await delay(DELAY_IN_MS);
     
     newNode.state = ElementStates.Default;
 
@@ -290,11 +291,11 @@ const getTail = (index: number, element: CircleElement) => {
       linkedListElements[i].state = ElementStates.Changing;
 
       setLinkedListElements([...linkedListElements]);
-      await delay(1000);
+      await delay(DELAY_IN_MS);
     }
 
     setCurrentStatus(ElementStates.Changing);
-    await delay(1000);
+    await delay(DELAY_IN_MS);
     linkedList.deleteByIndex(parseInt(indexValue));
     setLinkedListElements(linkedList.toArray());
 

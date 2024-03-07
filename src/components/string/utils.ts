@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ElementStates } from "../../types/element-states";
 import { delay } from "../../universal-functions/delay";
+import { DELAY_IN_MS } from "../../constants/delays";
 
 
 // Какого цвета кружки будут при их ПЕРВОНАЧАЛЬНОМ появлении:
@@ -99,7 +100,7 @@ export const useOutputElements = (inputedValues: string, isArrayReversed: boolea
 
       
       // делаем паузу в секунду
-      await delay(1000);
+      await delay(DELAY_IN_MS);
       // находим индекс левого розового элемента 
       const leftPinkIndex = outputElements.findIndex((elem) => {
         return elem.state === ElementStates.Changing;
