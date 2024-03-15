@@ -1,83 +1,53 @@
-// import { someFunction } from "./..";
+import renderer from "react-test-renderer";
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Button } from "./button";
 
-describe("testing component Button", () => { // Тест-сьют = объединение нескольких проверок
+
+
+
+describe("Button component testing", () => { // Тест-сьют - объединение проверок
 
   it("Is button with text displayed correctly", () => { // Тест-кейс
-    // Arrange
-    const a = 1;
-    const b = 2;
-    const expected = 3;
+    const tree = renderer.create(<Button text="Какой-то текст" />).toJSON();
+    expect(tree).toMatchSnapshot();
 
-
-    // Act
-    //const actual = someFunction(a, b);
-
-    // Assert
-    // В функцию expect передаю результат вычислений, и после того, как expect отработал,
-    // мы можем вызвать ряд методов, чтобы проверить результат.
-    // Чтобы запустить этот тест, написать в терминале: npm run test button.test.js
-    //expect(actual).toBe(expected);
-  })
+  });
 
 
   it("Is button without text displayed correctly", () => {
-    // Arrange
-    const a = 1;
-    const b = 2;
-    const expected = 3;
+    const tree = renderer.create(<Button text="" />).toJSON();
+    expect(tree).toMatchSnapshot();
 
-
-    // Act
-    //const actual = someFunction(a, b);
-
-    // Assert
-    //expect(actual).toBe(expected);
-  })
+  });
 
 
   it("Is disabled button displayed correctly", () => {
-    // Arrange
-    const a = 1;
-    const b = 2;
-    const expected = 3;
+    const tree = renderer.create(<Button disabled={true} />).toJSON();
+    expect(tree).toMatchSnapshot();
 
-
-    // Act
-    //const actual = someFunction(a, b);
-
-    // Assert
-    //expect(actual).toBe(expected);
-  })
-
+  });
 
 
   it("Is button with loader displayed correctly", () => {
-    // Arrange
-    const a = 1;
-    const b = 2;
-    const expected = 3;
+    const tree = renderer.create(<Button isLoader={true} />).toJSON();
+    expect(tree).toMatchSnapshot();
+
+  });
 
 
-    // Act
-    //const actual = someFunction(a, b);
+  it("Is a callback function being called correctly with a buttonclick", () => {
 
-    // Assert
-    //expect(actual).toBe(expected);
-  })
+    const someFunction = jest.fn(); // моковая функция
 
+    render(<Button onClick={someFunction} text="Сделать" />);
 
+    const button = screen.getByText("Сделать");
+    fireEvent.click(button);
 
-  it("Is callback function being called with button click correctly", () => {
-    // Arrange
-    const a = 1;
-    const b = 2;
-    const expected = 3;
-
-
-    // Act
-    //const actual = someFunction(a, b);
-
-    // Assert
-    //expect(actual).toBe(expected);
-  })
+    // if there are some precise arguments given to `someFunction` maybe 
+    // use `toHaveBeenCalledWith` instead
+    expect(someFunction).toHaveBeenCalled();
+    
+  });
 });
+
