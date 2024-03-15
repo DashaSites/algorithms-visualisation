@@ -1,8 +1,5 @@
 import React from "react";
-
-import ReactDOM from "react-dom";
-// NEW! import ReactDOM from 'react-dom/client';
-
+import ReactDOM from 'react-dom/client';
 import "./index.css";
 import "./fonts/fonts.css";
 import "./components/ui/common.css";
@@ -10,23 +7,16 @@ import "./components/ui/box.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 
-ReactDOM.render(
+
+
+
+
+const root = ReactDOM.createRoot(document.getElementById("root")!);
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
-
-
-
-
-// NEW!
-// const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
 
 
 
