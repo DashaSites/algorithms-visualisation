@@ -36,6 +36,7 @@ const getOutputElementsInitialState = (
 
 // Меняю местами левый и правый индексы элементов массива, меняю цвета кружочков
 const swap = (array: OutputElement[], leftIndex: number, rightIndex: number): void => {
+
   const temp = array[leftIndex];
   array[leftIndex] = array[rightIndex];
   array[rightIndex] = temp;
@@ -68,6 +69,7 @@ export type OutputElement = {
 export const useOutputElements = (inputedValues: string, isArrayReversed: boolean): OutputElement[] => {
   // завожу пустой массив объектов, чтоб положить в него (перевернутую или нет) строку
   const [outputElements, setOutputElements] = useState<OutputElement[]>([]);
+
   
   const reverseString = () => {
     const isArrayReversedBeforeClick = !isArrayReversed;
