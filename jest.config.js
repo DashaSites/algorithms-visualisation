@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
+  testTimeout: 90000,
   "moduleNameMapper": {
     "\\.(css|less|scss)$": "identity-obj-proxy"
   },

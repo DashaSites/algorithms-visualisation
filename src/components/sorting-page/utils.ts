@@ -1,4 +1,4 @@
-import { DELAY_IN_MS } from "../../constants/delays";
+import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { delay } from "../../universal-functions/delay";
 import { ArrayElement } from "./sorting-page";
@@ -14,14 +14,14 @@ const swap = (arr: ArrayElement[], firstIndex: number, secondIndex: number): voi
 
 
 // Сортировка выбором по возрастанию
-export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
+export const sortSelectionAscending = async (arr: ArrayElement[], setArr: (someArray: ArrayElement[]) => void): Promise<ArrayElement[]> => {
   const { length } = arr;
   
   for (let leftIndex = 0; leftIndex <= length - 1; leftIndex++) {
     let minInd = leftIndex;
     arr[minInd].state = ElementStates.Changing;
     setArr([...arr]);
-    await delay(DELAY_IN_MS);
+    await delay(SHORT_DELAY_IN_MS);
     
     for (let rightIndex = leftIndex + 1; rightIndex < length; rightIndex++) {
       arr[rightIndex].state = ElementStates.Changing;
@@ -29,7 +29,7 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
         arr[rightIndex-1].state = ElementStates.Default;
       }
       setArr([...arr]);
-      await delay(DELAY_IN_MS);
+      await delay(SHORT_DELAY_IN_MS);
 
       if (arr[rightIndex].value < arr[minInd].value) {
         minInd = rightIndex;
@@ -44,7 +44,7 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
     arr[leftIndex].state = ElementStates.Modified;
     setArr([...arr]);
   
-    await delay(DELAY_IN_MS);
+    await delay(SHORT_DELAY_IN_MS);
   }
 
   setArr([...arr]);
