@@ -64,7 +64,7 @@ export const SortingPage: React.FC = () => {
     await delay(DELAY_IN_MS)
   };
 
-// ЗАМОКАТЬ ФУНКЦИЮ-СЕТТЕР В ТЕСТЕ, И ЭТОТ АЛГОРИТМ ГОТОВ.
+
   // Запускаю сортировку по возрастанию (выбором либо пузырьком)
   const sortArrayInAscendingOrder = async () => {
   
