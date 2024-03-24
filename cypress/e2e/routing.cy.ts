@@ -1,6 +1,7 @@
 import { routes } from "../support/constants";
 
 describe('Routing testing', () => {
+  
   it('checks if string page opens', () => {
     cy.visit(routes.pageString);
   });
