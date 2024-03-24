@@ -17,7 +17,7 @@ describe("Stack testing", () => {
     cy.get("input").type("666").should("have.value", "666");
     cy.contains("Добавить").should("not.be.disabled").click();
 
-    cy.get("[class*=circle_content]").first().as('firstElement');
+    cy.get("[class*=circle_content]").first().as("firstElement");
     cy.get("@firstElement").contains("666");
     cy.get("@firstElement").contains("top");
     cy.get("@firstElement").contains("0");
@@ -32,11 +32,22 @@ describe("Stack testing", () => {
 
     cy.get("@firstElementCircle").invoke("attr", "class").then(classes => {
       expect(classes).to.contain("circle_default");
-    })
+    });
 
-    //cy.get('.check-box-sub-text').should('not.exist');
+    cy.get("input").type("777");
+    cy.contains("Добавить").click();
 
-
+    cy.get("[class*=circle_content]").should('have.length', 2).each(($element, index) => {
+      if (index === 0) {
+        cy.wrap($element).contains("666");
+      }
+      if (index === 1) {
+        cy.wrap($element).contains("777");
+        cy.wrap($element).contains("top");
+      }
+    });
+ 
+    // КАК УДАЛИТЬ: cy.get('.check-box-sub-text').should('not.exist');
   })
 
 });
