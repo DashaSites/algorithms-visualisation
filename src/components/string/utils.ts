@@ -23,7 +23,7 @@ const getOutputElementsInitialState = (
     // если в массиве минимум 2 знака
     const initialStateArray = someArray.map((input, index) => ({
       symbol: input,
-      state:
+      state: 
         index === 0 || index === someArray.length - 1
           ? ElementStates.Changing
           : ElementStates.Default,
