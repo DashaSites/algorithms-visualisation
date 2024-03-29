@@ -7,7 +7,6 @@ type OutputElement = {
   state: ElementStates;
 };
 
-
 describe("Testing of a string inverting algorithm", () => {
 
   it("Is a string with even number of symbols inverted correctly", () => {
@@ -21,7 +20,7 @@ describe("Testing of a string inverting algorithm", () => {
     }));
 
     // Act
-    // Проверяю алгоритм (метод .reverse):
+    // Проверяю алгоритм (этот алгоритм закапсулирован в методе .reverse):
     const actualOutputArray: OutputElement[] = initialString.split("").reverse().map((element) => ({
       symbol: element,
       state: ElementStates.Modified
@@ -31,8 +30,6 @@ describe("Testing of a string inverting algorithm", () => {
     // Проверяю, что алгоритм вернул результат, который совпадает с эталонным ответом:
     expect(actualOutputArray).toEqual(expectedOutputArray);
   });
-
-
 
   it("Is a string with odd number of symbols inverted correctly", () => { 
     // Arrange
@@ -45,7 +42,7 @@ describe("Testing of a string inverting algorithm", () => {
     }));
 
     // Act
-    // Проверяю алгоритм (метод .reverse):
+    // Проверяю алгоритм (работу метода .reverse):
     const actualOutputArray: OutputElement[] = initialString.split("").reverse().map((element) => ({
       symbol: element,
       state: ElementStates.Modified
@@ -55,8 +52,6 @@ describe("Testing of a string inverting algorithm", () => {
     // Проверяю, что алгоритм вернул результат, который совпадает с эталонным ответом:
     expect(actualOutputArray).toEqual(expectedOutputArray);
   });
-
-
 
   it("Is a string with one symbol inverted correctly", async () => { 
     // Arrange
@@ -76,11 +71,9 @@ describe("Testing of a string inverting algorithm", () => {
     }));
 
     // Assert
-    // Проверяю, что алгоритм вернул результат, который совпадает с эталонным ответом:
+    // Проверяю, что алгоритм .reverse вернул результат, который совпадает с эталонным ответом:
     expect(actualOutputArray).toEqual(expectedOutputArray);
   });
-
-
 
   it("Is an empty string inverted correctly", async () => {
     // Arrange
@@ -100,8 +93,7 @@ describe("Testing of a string inverting algorithm", () => {
     }));
     
     // Assert
-    // Проверяю, что алгоритм вернул результат, который совпадает с эталонным ответом:
+    // Проверяю, что .reverse вернул результат, который совпадает с эталонным ответом:
     expect(actualOutputArray).toEqual(expectedOutputArray);
   });
-
 });

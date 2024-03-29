@@ -5,82 +5,76 @@ import { ElementStates } from "../../../types/element-states";
 
 
 describe("Circle component testing", () => {
-
-  // БЕЗ БУКВЫ
+  // без буквы
   it("Is circle without letter displayed correctly", () => { 
     const tree = renderer.create(<Circle />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-
-  // С БУКВАМИ
+  // с буквами
   it("Is circle with letter displayed correctly", () => { 
     const tree = renderer.create(<Circle letter="Something" />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-
-  // С HEAD
+  // с head
   it("Is circle with head displayed correctly", () => { 
     const tree = renderer.create(<Circle head="top" />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
-
-  // С REACT-ЭЛЕМЕНТОМ В HEAD
+  // с react-элементом в head
   it("Is circle with react element in head displayed correctly", () => {
-
     const tree = renderer.create(<Circle head={<Circle />} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
 
-  // С TAIL
+  // с tail
   it("Is circle with tail displayed correctly", () => { 
     const tree = renderer.create(<Circle tail="tail" />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
 
-  // С REACT-ЭЛЕМЕНТОМ В TAIL
+  // с react-элементом в tail
   it("Is circle with react element in tail displayed correctly", () => {
     const tree = renderer.create(<Circle tail={<Circle />} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
 
-  // С INDEX
+  // с index
   it("Is circle with head displayed correctly", () => { 
     const tree = renderer.create(<Circle index={3} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
 
-  // С ПРОПОМ isSmall === true
+  // с пропом isSmall === true
   it("Is circle with head displayed correctly", () => { 
     const tree = renderer.create(<Circle isSmall={true} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
 
-  // СО СТЕЙТОМ DEFAULT
+  // со стейтом default
   it("Is circle with head displayed correctly", () => { 
     const tree = renderer.create(<Circle state={ElementStates.Default} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
 
-  // СО СТЕЙТОМ CHANGING
+  // со стейтом changing
   it("Is circle with head displayed correctly", () => { 
     const tree = renderer.create(<Circle state={ElementStates.Changing} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
 
-  // СО СТЕЙТОМ MODIFIED
+  // со стейтом modified
   it("Is circle with head displayed correctly", () => { 
     const tree = renderer.create(<Circle state={ElementStates.Modified} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-
 });

@@ -14,8 +14,6 @@ describe("Stack testing", () => {
 
 
   it("checks if a new element is being added correctly and animation works on each step", () => {
-
-    const circleColoredSelector = "[class*=circle_circle]";
     cy.get("input").type("666").should("have.value", "666");
     cy.contains("Добавить").should("not.be.disabled").click();
 
@@ -25,7 +23,7 @@ describe("Stack testing", () => {
     cy.get("@firstElement").contains("0");
   
 
-    cy.get("@firstElement").find(circleColoredSelector).as("firstElementCircle");
+    cy.get("@firstElement").find("[class*=circle_circle]").as("firstElementCircle");
     cy.get("@firstElementCircle").invoke("attr", "class").then(classes => {
       expect(classes).to.contain("circle_changing");
     })
@@ -47,14 +45,11 @@ describe("Stack testing", () => {
         cy.wrap($element).contains("777");
         cy.wrap($element).contains("top");
       }
-    });
- 
-    // КАК УДАЛИТЬ: cy.get('.check-box-sub-text').should('not.exist');
-  })
+    }); 
+  });
 
 
   it("checks if an element is being removed correctly", () => {
-
     const circleColoredSelector = "[class*=circle_circle]";
     // Рендер первого элемента
     cy.get("input").type("10").should("have.value", "10");
@@ -102,7 +97,6 @@ describe("Stack testing", () => {
 
 
   it("checks if the clear button works correctly", () => {
-
     const circleColoredSelector = "[class*=circle_circle]";
     // Добавляю первый элемент
     cy.get("input").type("1");
@@ -152,5 +146,4 @@ describe("Stack testing", () => {
     cy.contains("Очистить").click();
     cy.get("[class*=circle_content]").should('have.length', 0);
   });
-
 });

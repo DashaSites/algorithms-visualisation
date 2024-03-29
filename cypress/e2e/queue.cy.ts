@@ -6,7 +6,7 @@ describe("Queue testing", () => {
     cy.visit(routes.queue);
   });
 
-  
+
   it("checks if the add button is disabled while the input is empty", () => {
     cy.get("input").should("have.value", "");
     cy.contains("Добавить").should("be.disabled");
@@ -31,12 +31,12 @@ describe("Queue testing", () => {
 
     cy.get("[class*=circle_content]").should("have.length", 7).each(($element, index) => {
         if (index === 0) {
-            cy.wrap($element).contains("33");
-            cy.wrap($element).contains("head");
+          cy.wrap($element).contains("33");
+          cy.wrap($element).contains("head");
         }
         if (index === 1) {
-            cy.wrap($element).contains("44");
-            cy.wrap($element).contains("tail");
+          cy.wrap($element).contains("44");
+          cy.wrap($element).contains("tail");
         }
     });
   });
@@ -60,12 +60,12 @@ describe("Queue testing", () => {
 
     cy.get("[class*=circle_content]").should("have.length", 7).each(($element, index) => {
       if (index === 0) {
-          cy.wrap($element).contains("33");
-          cy.wrap($element).contains("head");
+        cy.wrap($element).contains("33");
+        cy.wrap($element).contains("head");
       }
       if (index === 1) {
-          cy.wrap($element).contains("44");
-          cy.wrap($element).contains("tail");
+        cy.wrap($element).contains("44");
+        cy.wrap($element).contains("tail");
       }
     });
 
@@ -75,12 +75,12 @@ describe("Queue testing", () => {
 
     cy.get("[class*=circle_content]").should("have.length", 7).each(($element, index) => {
       if (index === 0) {
-          cy.wrap($element).contains("33").should("not.exist");
+        cy.wrap($element).contains("33").should("not.exist");
       }
       if (index === 1) {
-          cy.wrap($element).contains("44");
-          cy.wrap($element).contains("head");
-          cy.wrap($element).contains("tail");
+        cy.wrap($element).contains("44");
+        cy.wrap($element).contains("head");
+        cy.wrap($element).contains("tail");
       }
     });
   });
@@ -125,5 +125,3 @@ describe("Queue testing", () => {
     cy.get("[class*=text_type_circle]").should("have.text", "");
   });
 });
-
-//cy.get('car').find('input').invoke('val').should('not.be.empty')

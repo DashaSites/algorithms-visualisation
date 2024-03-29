@@ -81,5 +81,4 @@ describe("String testing", () => {
       cy.get("@circleElement").should("have.text", finalArray[index]);
     });
   });
-  
 });
