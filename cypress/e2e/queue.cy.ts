@@ -121,23 +121,9 @@ describe("Queue testing", () => {
 
     // Очищаю очередь
     cy.contains("Очистить").click();
-
-    cy.get("[class*=circle_content]").should("have.length", 7).each(($element, index) => {
-      if (index === 0) {
-          cy.wrap($element).contains("33").should("not.exist");
-          cy.wrap($element).contains("head").should("not.exist");
-          cy.wrap($element).contains("tail").should("not.exist");
-      }
-      if (index === 1) {
-        cy.wrap($element).contains("44").should("not.exist");
-        cy.wrap($element).contains("head").should("not.exist");
-        cy.wrap($element).contains("tail").should("not.exist");
-      }
-      if (index === 2) {
-        cy.wrap($element).contains("55").should("not.exist");
-        cy.wrap($element).contains("head").should("not.exist");
-        cy.wrap($element).contains("tail").should("not.exist");
-      }
-    });
+    // Проверяю, что нет заполненных кружков
+    cy.get("[class*=text_type_circle]").should("have.text", "");
   });
 });
+
+//cy.get('car').find('input').invoke('val').should('not.be.empty')
