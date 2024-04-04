@@ -1,4 +1,4 @@
-import { DELAY_IN_MS } from "../../constants/delays";
+import { DELAY_IN_MS, SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 import { delay } from "../../universal-functions/delay";
 import { ArrayElement } from "./sorting-page";
@@ -13,15 +13,15 @@ const swap = (arr: ArrayElement[], firstIndex: number, secondIndex: number): voi
 };
 
 
-// Сортировка выбором по возрастанию
-export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
+// Сортировка выбором по возрастанию +
+export const sortSelectionAscending = async (arr: ArrayElement[], setArr: (someArray: ArrayElement[]) => void): Promise<ArrayElement[]> => {
   const { length } = arr;
   
   for (let leftIndex = 0; leftIndex <= length - 1; leftIndex++) {
     let minInd = leftIndex;
     arr[minInd].state = ElementStates.Changing;
     setArr([...arr]);
-    await delay(DELAY_IN_MS);
+    await delay(SHORT_DELAY_IN_MS);
     
     for (let rightIndex = leftIndex + 1; rightIndex < length; rightIndex++) {
       arr[rightIndex].state = ElementStates.Changing;
@@ -29,7 +29,7 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
         arr[rightIndex-1].state = ElementStates.Default;
       }
       setArr([...arr]);
-      await delay(DELAY_IN_MS);
+      await delay(SHORT_DELAY_IN_MS);
 
       if (arr[rightIndex].value < arr[minInd].value) {
         minInd = rightIndex;
@@ -44,7 +44,7 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
     arr[leftIndex].state = ElementStates.Modified;
     setArr([...arr]);
   
-    await delay(DELAY_IN_MS);
+    await delay(SHORT_DELAY_IN_MS);
   }
 
   setArr([...arr]);
@@ -52,15 +52,15 @@ export const sortSelectionAscending = async (arr: ArrayElement[], setArr: React.
 };
 
 
-// Сортировка выбором по убыванию
-export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
+// Сортировка выбором по убыванию +
+export const sortSelectionDescending = async (arr: ArrayElement[], setArr: (someArray: ArrayElement[]) => void): Promise<ArrayElement[]> => {
   const { length } = arr;
 
   for (let i = 0; i <= length - 1; i++) {
     let maxInd = i;
     arr[maxInd].state = ElementStates.Changing;
     setArr([...arr]);
-    await delay(DELAY_IN_MS);
+    await delay(SHORT_DELAY_IN_MS);
 
     for (let j = i + 1; j < length; j++) {
       arr[j].state = ElementStates.Changing;
@@ -68,7 +68,7 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
         arr[j-1].state = ElementStates.Default;
       }
       setArr([...arr]);
-      await delay(DELAY_IN_MS);
+      await delay(SHORT_DELAY_IN_MS);
 
       if (arr[j].value > arr[maxInd].value) {
         maxInd = j;
@@ -83,7 +83,7 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
     arr[i].state = ElementStates.Modified;
 
     setArr([...arr]);
-    await delay(DELAY_IN_MS);
+    await delay(SHORT_DELAY_IN_MS);
 
   }
 
@@ -93,8 +93,8 @@ export const sortSelectionDescending = async (arr: ArrayElement[], setArr: React
 
 
 
-// Сортировка пузырьком по возрастанию
-export const sortBubbleAscending = async (array: ArrayElement[], setArray: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
+// Сортировка пузырьком по возрастанию +
+export const sortBubbleAscending = async (array: ArrayElement[], setArray: (someArray: ArrayElement[]) => void): Promise<ArrayElement[]> => {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length-i-1; j++) {
       array[j].state = ElementStates.Changing;
@@ -119,7 +119,7 @@ export const sortBubbleAscending = async (array: ArrayElement[], setArray: React
 
 
 // Сортировка пузырьком по убыванию
-export const sortBubbleDescending = async (array: ArrayElement[], setArray: React.Dispatch<React.SetStateAction<ArrayElement[]>>): Promise<ArrayElement[]> => {
+export const sortBubbleDescending = async (array: ArrayElement[], setArray: (someArray: ArrayElement[]) => void): Promise<ArrayElement[]> => {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length-i-1; j++) {
       array[j].state = ElementStates.Changing;

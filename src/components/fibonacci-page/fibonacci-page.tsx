@@ -94,8 +94,7 @@ const renderArrayWithDelay = async () => {
           </p>
         </div>
         <Button 
-          text="Рассчитать" 
-          type="submit"
+          text="Рассчитать"
           isLoader={isLoader}
           disabled={isDisabled} 
           extraClass={styles.calculateButton}

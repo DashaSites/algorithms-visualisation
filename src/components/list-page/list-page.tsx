@@ -156,6 +156,7 @@ const getTail = (index: number, element: CircleElement) => {
           letter={element.value} //
           state={ElementStates.Changing} 
           isSmall={true}
+          data-cy="smallCircle"  
         />
       )
     }
@@ -335,7 +336,8 @@ const getTail = (index: number, element: CircleElement) => {
               extraClass={styles.input}
               maxLength={4}
               value={inputValue}
-              onChange={handleInputChange}  
+              onChange={handleInputChange}
+              data-cy="inputValue"  
             />
             <p className={styles.subscript}>Максимум — 4 символа</p>
           </div>
@@ -377,7 +379,8 @@ const getTail = (index: number, element: CircleElement) => {
             extraClass={styles.input}
             maxLength={4}
             value={indexValue}
-            onChange={handleIndexChange}  
+            onChange={handleIndexChange}
+            data-cy="inputIndex"   
           />
           <div className={styles.buttonsByIndexBlock}>
             <Button
