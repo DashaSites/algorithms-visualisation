@@ -10,6 +10,8 @@ Includes interactive visualizations for:
 - **Queue** — enqueue and dequeue with animated head/tail shifts and index labeling
 - **Linked list** — insert/delete at head, tail, or by index, animated step-by-step
 
+🔗  [Live demo](https://gorgeous-pika-7c0b56.netlify.app/)
+
 #### Technologies:
 - TypeScript
 - React
