@@ -10,10 +10,15 @@ The app includes interactive visualizations for:
 
 Each interaction is animated with simple transitions and color changes to help visualize the algorithm’s logic.
 
-📌 This was part of a training program aimed at deepening understanding of algorithm mechanics through UI implementation — not focused on production-level design.
+This was part of a training program aimed at deepening understanding of algorithm mechanics through UI implementation — not focused on production-level design.
+
+Includes partial test coverage using **Jest**, **React Testing Library**, and **Cypress** — covering component behavior, algorithm logic, and key UI flows with animations.
 
 🔗  [Live demo](https://gorgeous-pika-7c0b56.netlify.app/)
 
 #### Technologies:
 - React  
 - TypeScript
+- Jest  
+- React Testing Library  
+- Cypress
