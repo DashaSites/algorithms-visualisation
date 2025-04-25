@@ -12,7 +12,7 @@ Each interaction is animated with simple transitions and color changes to help v
 
 This was part of a training program aimed at deepening understanding of algorithm mechanics through UI implementation — not focused on production-level design.
 
-Includes partial test coverage using **Jest**, **React Testing Library**, and **Cypress** — covering component behavior, algorithm logic, and key UI flows with animations.
+Includes partial test coverage using Jest, React Testing Library, and Cypress — covering component behavior, algorithm logic, and key UI flows with animations.
 
 🔗  [Live demo](https://gorgeous-pika-7c0b56.netlify.app/)
 
